@@ -1,1 +1,3 @@
-# js-policy-number-challenge-boilerplate
+# KinOcr
+
+please use the `sample.txt` file to input into your.
