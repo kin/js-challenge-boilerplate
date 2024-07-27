@@ -1,0 +1,46 @@
+$border-color: var(--color-neutral-400);
+$border: 1px solid $border-color;
+
+:host {
+  align-items: flex-start;
+  background-color: var(--color-neutral-white);
+  border: $border;
+  border-radius: 8px;
+  display: grid;
+  font-size: 14px;
+  grid-template: min-content / 64px 1fr;
+  grid-auto-rows: min-content;
+  overflow-y: auto;
+  position: relative;
+
+  .record-number,
+  .policy-number {
+    &.header {
+      border-top: none;
+      position: sticky;
+    }
+
+    &.odd {
+      background-color: var(--color-neutral-200);
+    }
+    &.last {
+      border-bottom: $border;
+    }
+
+    align-items: center;
+    display: flex;
+    border-top: $border;
+    padding: 16px;
+  }
+
+  .record-number {
+    grid-column: 1/2;
+    text-align: right;
+  }
+
+  .policy-number {
+
+    border-left: $border;
+    grid-column: 2/3;
+  }
+}

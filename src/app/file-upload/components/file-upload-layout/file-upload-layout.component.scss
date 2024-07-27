@@ -1,0 +1,25 @@
+$pad: var(--pad);
+
+:host {
+  bottom: 0;
+  box-sizing: border-box;
+  display: grid;
+  grid-template: repeat(2, auto) 1fr / minmax(var(--pad), 1fr) minmax(240px, 720px) minmax(var(--pad), 1fr);
+  height: 100%;
+  row-gap: $pad;
+  overflow: hidden;
+  padding: $pad 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+
+  .page-header {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+  }
+  >* {
+    grid-column: 2/3;
+  }
+}
