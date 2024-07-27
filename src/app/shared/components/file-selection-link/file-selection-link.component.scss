@@ -1,0 +1,22 @@
+:host {
+  display: inline;
+  position: relative;
+
+  input[type="file"] {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    z-index: -1;
+  }
+
+  label {
+    color: #14c;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}

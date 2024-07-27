@@ -1,0 +1,6 @@
+<div class="record-number header"></div>
+<div class="policy-number header">Policy Number</div>
+@for (policy of policies(); track policy.policyNumber; let idx = $index, odd = $even, last = $last) {
+  <div class="record-number" [ngClass]="{'odd': odd, 'last': last}">{{idx + 1}}</div>
+  <div class="policy-number" [ngClass]="{'odd': odd, 'last': last}">{{policy.policyNumber}}</div>
+}
