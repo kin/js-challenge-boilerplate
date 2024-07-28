@@ -4,16 +4,16 @@ import {
   FileUploadStateInternals as StateInternals,
   FileUploadState as State,
   FileUploadStateOptions as StateOptions,
-  FileUploadStateDecoratorFn as DecoratorFn
+  FileUploadStateDecoratorFn as StateDecoratorFn
 } from './file-upload-state.interface';
 import { fileUploadStatesFactory } from './file-upload-states-factory';
-import { policyRecord, PolicyRecord } from '../policy-records';
+import { policyRecord } from '../policy-records';
 
 const ID = Flags.ParsingFile
 
 fileUploadStatesFactory.register(ID, state);
 
-function state(internals: StateInternals): DecoratorFn {
+function state(internals: StateInternals): StateDecoratorFn {
   return function (baseState: State): State {
     const thisState = stateFn as State;
 

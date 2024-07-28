@@ -4,7 +4,7 @@ import {
   FileUploadStateInternals as StateInternals,
   FileUploadState as State,
   FileUploadStateOptions as StateOptions,
-  FileUploadStateDecoratorFn as DecoratorFn
+  FileUploadStateDecoratorFn as StateDecoratorFn
 } from './file-upload-state.interface';
 import { fileUploadStatesFactory } from './file-upload-states-factory';
 
@@ -13,7 +13,7 @@ const validFileTypes = new Set(['text/csv']);
 
 fileUploadStatesFactory.register(ID, state);
 
-function state(internals: StateInternals): DecoratorFn {
+function state(internals: StateInternals): StateDecoratorFn {
   return function (baseState: State): State {
     const thisState = stateFn as State;
 
@@ -33,10 +33,6 @@ function state(internals: StateInternals): DecoratorFn {
     function validateFile(file: File): void {
       const maxSize = 2000000; // 2mb
 
-      console.log(file.name);
-      console.log(file.size);
-      console.log(`${(file.size / 1000).toFixed(2)}kb`)
-      console.log(`${Math.round(file.size / 1000)}kb`)
       if (!validFileTypes.has(file.type)) {
         internals.flags |= Flags.InvalidFileType;
       }

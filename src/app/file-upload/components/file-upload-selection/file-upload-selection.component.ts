@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FileUploadStateContext } from '@file-upload/providers/file-upload-state-context';
 import { FileSelectionLinkComponent } from '@shared/components';
+import { FileDropTargetDirective } from '@shared/directives';
 
 @Component({
   selector: 'kn-file-upload-selection',
@@ -8,9 +9,11 @@ import { FileSelectionLinkComponent } from '@shared/components';
   styleUrls: ['./file-upload-selection.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    FileSelectionLinkComponent
-  ]
+  hostDirectives: [{
+    directive: FileDropTargetDirective,
+    outputs: ['fileDropped']
+  }],
+  imports: [FileSelectionLinkComponent]
 })
 export class FileUploadSelectionComponent {
   public selectFile = selectFileFn();
