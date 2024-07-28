@@ -7,7 +7,8 @@ export function policyRecord(rawPolicyNumber: number): PolicyRecord {
   const internals = initializeInternals(rawPolicyNumber);
 
   Object.defineProperties(thisPolicyRecord, {
-    policyNumber: prop(getter(getPolicyNumber))
+    policyNumber: prop(getter(getPolicyNumber)),
+    isValid: prop(getter(() => !!internals.policyNumber)),
   } as ObjectProps<PolicyRecord>);
 
   return Object.seal(thisPolicyRecord);

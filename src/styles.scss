@@ -1,13 +1,4 @@
  :root {
-   font-family: "Open Sans", sans-serif;
-
-   body {
-     padding: 0;
-     margin: 0;
-   }
-
-   --pad: 16px;
-
    --color-primary: #ffc857;
    --color-primary-100: #fbf8f3;
    --color-primary-200: #fae7b8;
@@ -56,4 +47,28 @@
    --color-neutral-600: #757575;
    --color-neutral-700: #616161;
    --color-neutral-800: #3e3e3e;
+   --pad-base: 16px;
+
+   font-family: "Open Sans", sans-serif;
+
+   body {
+     padding: 0;
+     margin: 0;
+   }
+
+   .material-symbols-outlined {
+     &.filled {
+       font-variation-settings:
+         'FILL' 1,
+         'wght' 400,
+         'GRAD' 0,
+         'opsz' 24;
+     }
+
+     font-variation-settings: 
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24;
+   }
  }

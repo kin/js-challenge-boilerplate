@@ -1,10 +1,10 @@
-$pad: var(--pad);
+$pad: var(--pad-base);
 
 :host {
   bottom: 0;
   box-sizing: border-box;
   display: grid;
-  grid-template: repeat(2, auto) 1fr / minmax(var(--pad), 1fr) minmax(240px, 720px) minmax(var(--pad), 1fr);
+  grid-template: repeat(2, auto) 1fr / minmax(var(--pad-base), 1fr) minmax(240px, 720px) minmax(var(--pad-base), 1fr);
   height: 100%;
   row-gap: $pad;
   overflow: hidden;
