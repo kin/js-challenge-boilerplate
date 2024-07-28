@@ -33,10 +33,6 @@ function state(internals: StateInternals): DecoratorFn {
     function validateFile(file: File): void {
       const maxSize = 2000000; // 2mb
 
-      console.log(file.name);
-      console.log(file.size);
-      console.log(`${(file.size / 1000).toFixed(2)}kb`)
-      console.log(`${Math.round(file.size / 1000)}kb`)
       if (!validFileTypes.has(file.type)) {
         internals.flags |= Flags.InvalidFileType;
       }
