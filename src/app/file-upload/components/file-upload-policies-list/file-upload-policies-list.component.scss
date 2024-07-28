@@ -23,6 +23,7 @@ $border: 1px solid $border-color;
     &.odd {
       background-color: var(--color-neutral-200);
     }
+
     &.last {
       border-bottom: $border;
     }
@@ -34,12 +35,13 @@ $border: 1px solid $border-color;
   }
 
   .record-number {
+    box-sizing: border-box;
     grid-column: 1/2;
-    text-align: right;
+    justify-content: flex-end;
+    width: 100%;
   }
 
   .policy-number {
-
     border-left: $border;
     grid-column: 2/3;
   }
