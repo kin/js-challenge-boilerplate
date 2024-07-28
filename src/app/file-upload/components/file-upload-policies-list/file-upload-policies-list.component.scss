@@ -8,13 +8,14 @@ $border: 1px solid $border-color;
   border-radius: 8px;
   display: grid;
   font-size: 14px;
-  grid-template: min-content / 64px 1fr;
+  grid-template: min-content / 64px repeat(2, 1fr);
   grid-auto-rows: min-content;
   overflow-y: auto;
   position: relative;
 
   .record-number,
-  .policy-number {
+  .policy-number,
+  .status {
     &.header {
       border-top: none;
       position: sticky;
@@ -28,6 +29,7 @@ $border: 1px solid $border-color;
       border-bottom: $border;
     }
 
+    
     align-items: center;
     display: flex;
     border-top: $border;
@@ -45,4 +47,21 @@ $border: 1px solid $border-color;
     border-left: $border;
     grid-column: 2/3;
   }
+
+  .status {
+    border-left: $border;
+    column-gap: 4px;
+    grid-column: 3/4;
+    
+    &.error {
+      .icon {
+        color: var(--color-warning);
+      }
+    }
+    .icon {
+      color: var(--color-success);
+      font-size: 18px;
+    }
+  }
+
 }

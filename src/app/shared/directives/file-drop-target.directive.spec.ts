@@ -7,7 +7,6 @@ import { FileDropTargetDirective } from './file-drop-target.directive';
 describe('The FileDropTargetDirective class:', () => {
   let directive: FileDropTargetDirective;
   let klass: any;
-  let listener: sinon.SinonSpy;
   let outputSpy: sinon.SinonSpy;
   let cfg: Directive;
 
@@ -21,7 +20,6 @@ describe('The FileDropTargetDirective class:', () => {
   afterAll(() => {
     klass = undefined as any;
     directive = undefined as any;
-    listener = undefined as any;
     outputSpy = undefined as any;
     cfg = undefined as any;
   });
