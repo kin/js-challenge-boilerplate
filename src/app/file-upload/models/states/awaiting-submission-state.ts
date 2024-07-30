@@ -8,7 +8,7 @@ import {
 import { fileUploadStatesFactory } from './file-upload-states-factory';
 import { abstractBaseState } from './abstract-base-state';
 
-const ID = Flags.Idle
+const ID = Flags.AwaitingSubmission;
 
 fileUploadStatesFactory.register(ID, state);
 
@@ -18,14 +18,20 @@ function state(internals: StateInternals): State {
 
   Object.defineProperties(thisState, {
     ...Object.getOwnPropertyDescriptors(baseState),
-    description: prop(initialValue('Idle State'), readOnly)
+    description: prop(initialValue('Awaiting Policies Submission'), readOnly)
   } as ObjectProps<State>);
+
+  internals.modal.open();
 
   return thisState;
 
   function stateFn(options: StateOptions): void {
-    if (options.initialize) {
-      internals.setState(Flags.AwaitingFileSelection);
+    const { submissionId } = options;
+
+    if (submissionId) {
+      internals.modal.dismiss();
+      internals.submissionId = submissionId;
+      internals.setState(Flags.SubmissionSuccess);
     }
     baseState(options);
   }

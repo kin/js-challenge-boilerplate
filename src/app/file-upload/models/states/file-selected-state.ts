@@ -1,3 +1,4 @@
+import { take } from 'rxjs';
 import { initialValue, ObjectProps, prop, readOnly } from '@shared/models';
 import { FileUploadStateFlags as Flags } from './file-upload-state-flags.enum';
 import {
@@ -8,7 +9,7 @@ import {
 import { fileUploadStatesFactory } from './file-upload-states-factory';
 import { abstractBaseState } from './abstract-base-state';
 
-const ID = Flags.Idle
+const ID = Flags.FileSelected;
 
 fileUploadStatesFactory.register(ID, state);
 
@@ -18,14 +19,33 @@ function state(internals: StateInternals): State {
 
   Object.defineProperties(thisState, {
     ...Object.getOwnPropertyDescriptors(baseState),
-    description: prop(initialValue('Idle State'), readOnly)
+    description: prop(initialValue('File Selected'), readOnly)
   } as ObjectProps<State>);
 
   return thisState;
 
+  function handleFile(file: File): void {
+    const nextState = internals.setState(Flags.AwaitingFileValidation);
+
+    nextState({ file });
+  }
+
+  function handleSubmit(): void {
+    const nextState = internals.setState(Flags.AwaitingSubmission);
+
+    internals.data.sendPolicyData(internals.policies.all).pipe(
+      take(1)
+    ).subscribe(submissionId => nextState({ submissionId }));
+  }
+
   function stateFn(options: StateOptions): void {
-    if (options.initialize) {
-      internals.setState(Flags.AwaitingFileSelection);
+    const { file, submit } = options;
+
+    if (file) {
+      handleFile(file);
+    }
+    if (submit) {
+      handleSubmit();
     }
     baseState(options);
   }

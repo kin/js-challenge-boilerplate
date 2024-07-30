@@ -1,3 +1,5 @@
+import { Modal } from '@shared/models';
+import { PoliciesDataClient } from '../data';
 import { PolicyRecord } from '../policy-records';
 import { abstractBaseState } from './abstract-base-state';
 import { fileUploadNoopState } from './file-upload-noop-state';
@@ -5,24 +7,28 @@ import { FileUploadStateFlags } from './file-upload-state-flags.enum';
 import {
   FileUploadState,
   FileUploadStateDecoratorFactoryFn,
-  FileUploadStateDecoratorFn,
+  FileUploadStateFactoryFn,
   FileUploadStateInternals
 } from './file-upload-state.interface';
 
-const factories = new Map<number, FileUploadStateDecoratorFactoryFn>();
+const factories = new Map<number, FileUploadStateFactoryFn>();
+let superStates = FileUploadStateFlags.None;
 
 export function fileUploadStatesFactory({
   setState: setStateBase,
+  data,
+  modal
 }: Config): (id: number) => FileUploadState {
   const internals: FileUploadStateInternals = {
     setState,
+    data,
     flags: FileUploadStateFlags.None,
+    modal,
     policies: {
       byId: new Map<number, PolicyRecord>(),
       all: []
     },
   };
-  const [decorators, superStates] = initializeDecorators(internals);
 
   return createState;
 
@@ -33,10 +39,8 @@ export function fileUploadStatesFactory({
     return create();
 
     function create(): FileUploadState {
-      const decorator = decorators.get(id);
-      const state = decorator
-        ? decorator(abstractBaseState(internals))
-        : fileUploadNoopState();
+      const factory = factories.get(id);
+      const state = factory ? factory(internals) : fileUploadNoopState();
 
       return Object.seal(state);
     }
@@ -51,27 +55,16 @@ export function fileUploadStatesFactory({
   }
 }
 
-function initializeDecorators(
-  internals: FileUploadStateInternals
-): [Map<number, FileUploadStateDecoratorFn>, number] {
-  const fns = new Map<number, FileUploadStateDecoratorFn>();
-  let superStates = FileUploadStateFlags.None;
-
-  for (const [k, fn] of factories.entries()) {
-    fns.set(k, fn(internals));
-    superStates |= k;
-  }
-
-  return [fns, superStates];
-}
-
 fileUploadStatesFactory.register = (
   key: number,
-  fn: FileUploadStateDecoratorFactoryFn
+  fn: FileUploadStateFactoryFn
 ) => {
   factories.set(key, fn);
+  superStates |= key;
 }
 
 interface Config {
   setState(nextState: FileUploadState): void;
+  data: PoliciesDataClient;
+  modal: Modal;
 }
