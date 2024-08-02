@@ -16,13 +16,10 @@ export function initialValue(
 }
 
 export function editable(descriptor: PropertyDescriptor): PropertyDescriptor {
-  if (descriptor.value !== undefined) {
-    return {
-      ...descriptor,
-      writable: true,
-    };
-  }
-  return descriptor;
+  return {
+    ...descriptor,
+    writable: true,
+  };
 }
 
 export function readOnly(descriptor: PropertyDescriptor): PropertyDescriptor {
@@ -37,12 +34,15 @@ export function readOnly(descriptor: PropertyDescriptor): PropertyDescriptor {
 
 export function method(val: any): DescriptorDecorator {
   return function (descriptor: PropertyDescriptor): PropertyDescriptor {
-    descriptor = {
-      value: val,
-      writable: false,
-    };
-    delete descriptor.get;
-    delete descriptor.set;
+    if (typeof val === 'function') {
+      descriptor = {
+        ...descriptor,
+        value: val,
+        writable: false,
+      };
+      delete descriptor.get;
+      delete descriptor.set;
+    }
 
     return descriptor;
   };

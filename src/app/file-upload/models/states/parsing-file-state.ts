@@ -4,49 +4,56 @@ import {
   FileUploadStateInternals as StateInternals,
   FileUploadState as State,
   FileUploadStateOptions as StateOptions,
-  FileUploadStateDecoratorFn as StateDecoratorFn
 } from './file-upload-state.interface';
 import { fileUploadStatesFactory } from './file-upload-states-factory';
+import { abstractBaseState } from './abstract-base-state';
 import { policyRecord } from '../policy-records';
+import { fromEvent, map, take } from 'rxjs';
 
 const ID = Flags.ParsingFile
 
 fileUploadStatesFactory.register(ID, state);
 
-function state(internals: StateInternals): StateDecoratorFn {
-  return function (baseState: State): State {
-    const thisState = stateFn as State;
+function state(internals: StateInternals): State {
+  const baseState = abstractBaseState(internals);
+  const thisState = stateFn as State;
 
-    Object.defineProperties(thisState, {
-      ...Object.getOwnPropertyDescriptors(baseState),
-      description: prop(initialValue('Parsing File State'), readOnly)
-    } as ObjectProps<State>);
+  Object.defineProperties(thisState, {
+    ...Object.getOwnPropertyDescriptors(baseState),
+    description: prop(initialValue('Parsing File State'), readOnly)
+  } as ObjectProps<State>);
 
-    try {
-      return thisState;
-    } finally {
-      setTimeout(parseFile, 0);
-    }
+  internals.modal.open();
 
-    function parseFile(): void {
-      const mockData = [
-        345882865,
-        457508000,
-        664371495,
-      ];
+  try {
+    return thisState;
+  } finally {
+    setTimeout(parseFile, 100);
+  }
 
-      internals.policies.byId.clear();
+  function parseFile(): void {
+    const reader = new FileReader();
 
-      for (const d of mockData) {
-        const record = policyRecord(d);
-        internals.policies.byId.set(d, record);
+    fromEvent(reader, 'load').pipe(
+      map((e: any) => e.target!.result),
+      map((x: string) => x.split(',')),
+      take(1)
+    ).subscribe(policyNumberData => {
+      const size = policyNumberData;
+
+      internals.policies.all = new Array(policyNumberData.length);
+
+      for (const [i, p] of policyNumberData.entries()) {
+        internals.policies.all[i] = policyRecord(+p);
       }
-      internals.policies.all = [...internals.policies.byId.values()];
-      internals.setState(Flags.AwaitingFileUpload);
-    }
+      internals.modal.dismiss();
+      internals.setState(Flags.FileSelected);
+    });
 
-    function stateFn(options: StateOptions): void {
-      baseState(options);
-    }
-  };
+    reader.readAsText(internals.file!, 'utf-8');
+  }
+
+  function stateFn(options: StateOptions): void {
+    baseState(options);
+  }
 }

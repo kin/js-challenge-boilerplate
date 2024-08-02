@@ -1,0 +1,12 @@
+:host {
+  .container {
+    align-items: center;
+    column-gap: 8px;
+    display: grid;
+    grid-template: auto / auto 1fr;
+
+    >* {
+      grid-row: 1/2;
+    }
+  }
+}

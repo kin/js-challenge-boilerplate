@@ -28,36 +28,12 @@ export function policyNumber(candidatePolicyNumber: any): PolicyNumber {
   }
 }
 
-policyNumber.validate = validatePolicyNumber;
-
-function validatePolicyNumber(candidate: any): ValidPolicyNumber | undefined {
-  if (candidate) {
-    if (isValid(candidate.toString())) {
-      return +candidate as ValidPolicyNumber;
-    }
-  }
-  return undefined;
-
-  function isValid(candidataAsString: string): boolean {
-    if (candidataAsString.match(test)) {
-      const dividend = [...candidataAsString].reduce((d, char, idx) => {
-        const fn = validationMap.get(idx)!;
-
-        return d + fn(+char);
-      }, 0);
-
-      return dividend % 11 === 0;
-    }
-    return false;
-  }
-}
-
 interface Internals {
   policyNumber: ValidPolicyNumber;
 }
 
 function initializeInternals(rawPolicyNumber: number): Internals {
-  const validPolicyNumber = policyNumber.validate(rawPolicyNumber);
+  const validPolicyNumber = validate();
 
   if (!validPolicyNumber) {
     throw new InvalidPolicyNumberException(rawPolicyNumber);
@@ -66,6 +42,28 @@ function initializeInternals(rawPolicyNumber: number): Internals {
   return {
     policyNumber: validPolicyNumber
   };
+
+  function validate(): ValidPolicyNumber | undefined {
+    if (rawPolicyNumber) {
+      if (isValid(rawPolicyNumber.toString())) {
+        return +rawPolicyNumber as ValidPolicyNumber;
+      }
+    }
+    return undefined;
+
+    function isValid(candidataAsString: string): boolean {
+      if (candidataAsString.match(test)) {
+        const dividend = [...candidataAsString].reduce((d, char, idx) => {
+          const fn = validationMap.get(idx)!;
+
+          return d + fn(+char);
+        }, 0);
+
+        return dividend % 11 === 0;
+      }
+      return false;
+    }
+  }
 }
 
 function initializeValidationMap(): Map<number, (x: number) => number> {

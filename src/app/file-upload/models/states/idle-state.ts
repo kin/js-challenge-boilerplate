@@ -4,30 +4,29 @@ import {
   FileUploadStateInternals as StateInternals,
   FileUploadState as State,
   FileUploadStateOptions as StateOptions,
-  FileUploadStateDecoratorFn as StateDecoratorFn
 } from './file-upload-state.interface';
 import { fileUploadStatesFactory } from './file-upload-states-factory';
+import { abstractBaseState } from './abstract-base-state';
 
 const ID = Flags.Idle
 
 fileUploadStatesFactory.register(ID, state);
 
-function state(internals: StateInternals): StateDecoratorFn {
-  return function (baseState: State): State {
-    const thisState = stateFn as State;
+function state(internals: StateInternals): State {
+  const baseState = abstractBaseState(internals);
+  const thisState = stateFn as State;
 
-    Object.defineProperties(thisState, {
-      ...Object.getOwnPropertyDescriptors(baseState),
-      description: prop(initialValue('Idle State'), readOnly)
-    } as ObjectProps<State>);
+  Object.defineProperties(thisState, {
+    ...Object.getOwnPropertyDescriptors(baseState),
+    description: prop(initialValue('Idle State'), readOnly)
+  } as ObjectProps<State>);
 
-    return thisState;
+  return thisState;
 
-    function stateFn(options: StateOptions): void {
-      if (options.initialize) {
-        internals.setState(Flags.AwaitingFileSelection);
-      }
-      baseState(options);
+  function stateFn(options: StateOptions): void {
+    if (options.initialize) {
+      internals.setState(Flags.AwaitingFileSelection);
     }
-  };
+    baseState(options);
+  }
 }

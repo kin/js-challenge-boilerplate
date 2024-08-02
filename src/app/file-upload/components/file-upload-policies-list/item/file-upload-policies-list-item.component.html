@@ -1,0 +1,18 @@
+@if (policy(); as p) {
+  <!-- <div class="record-number">{{recordNumber()}}</div> -->
+  <div class="policy-number">
+    <div class="policy-number__label">Policy Number</div>
+    <div>{{p.policyNumber}}</div>
+  </div>
+  @if (p.isValid) {
+    <div class="status">
+      <span class="material-symbols-outlined filled icon">&#xe86c;</span>
+      <span class="description">valid</span>
+    </div>
+  } @else {
+    <div class="status error">
+      <span class="material-symbols-outlined filled icon">&#xe86c;</span>
+      <span class="description">error</span>
+    </div>
+  }
+}

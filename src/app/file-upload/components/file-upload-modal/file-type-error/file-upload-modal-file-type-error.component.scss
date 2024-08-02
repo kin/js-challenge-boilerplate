@@ -1,0 +1,24 @@
+:host {
+  box-sizing: border-box;
+  display: block;
+  width: 360px;
+
+  .message {
+    align-items: flex-start;
+    column-gap: 8px;
+    display: grid;
+    grid-template: auto / auto 1fr;
+    font-size: 14px;
+
+    .icon {
+      color: var(--color-warning);
+      font-size: 36px;
+    }
+  }
+
+  .kn-dialog-actions {
+    .kn-button {
+      width: 100%;
+    }
+  }
+}

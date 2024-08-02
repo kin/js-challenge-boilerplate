@@ -1,0 +1,74 @@
+$border: 1px solid var(--color-border-default);
+
+:host {
+  align-items: center;
+  background-color: var(--color-neutral-white);
+  border: $border;
+  border-radius: 8px;
+  column-gap: 32px;
+  display: grid;
+  font-size: 14px;
+  grid-template: auto / repeat(2, 1fr);
+  overflow-y: auto;
+  padding: var(--pad-base);
+  position: relative;
+
+  .record-number,
+  .policy-number,
+  .status {
+    align-items: center;
+    display: flex;
+  }
+
+  .record-number,
+  .status {
+    grid-row: 1/-1;
+  }
+  .record-number {
+    box-sizing: border-box;
+    color: var(--color-neutral-600);
+    font-size: 11px;
+    grid-column: 1/2;
+    height: 100%;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .policy-number {
+    display: grid;
+    grid-template: repeat(2, auto) / 1fr;
+    font-size: 24px;
+    font-weight: 500;
+    grid-column: 1/2;
+
+    >* {
+      grid-column: 1/2;
+      grid-row: 2/3;
+    }
+
+    .policy-number__label {
+      font-size: 12px;
+      font-weight: 400;
+      grid-row: 1/2;
+      color: var(--color-neutral-muted);
+      text-transform: uppercase;
+    }
+  }
+
+  .status {
+    column-gap: 4px;
+    grid-column: 2/3;
+    justify-self: flex-end;
+
+    &.error {
+      .icon {
+        color: var(--color-warning);
+      }
+    }
+
+    .icon {
+      color: var(--color-success);
+      font-size: 18px;
+    }
+  }
+}

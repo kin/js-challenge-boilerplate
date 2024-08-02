@@ -1,0 +1,12 @@
+<header class="kn-dialog-header">
+  <ng-content select="kn-dialog-title" />
+</header>
+<div class="kn-dialog-body"><ng-content /></div>
+<footer class="kn-dialog-footer">
+  <ng-content select="kn-dialog-actions" />
+</footer>
+@if (hasCloseButton()) {
+  <button class="kn-dialog-close-button" (click)="close()">
+    <span class="material-symbols-outlined">close</span>
+  </button>
+}

@@ -1,0 +1,32 @@
+$pad: var(--pad-base);
+
+:host {
+  bottom: 0;
+  box-sizing: border-box;
+  display: grid;
+  grid-template: repeat(2, auto) 1fr / minmax(var(--pad-base), 1fr) minmax(240px, 720px) minmax(var(--pad-base), 1fr);
+  height: 100%;
+  overflow: hidden;
+  padding: 0 0 16px 0;
+  position: absolute;
+  row-gap: $pad;
+  top: 0;
+  width: 100%;
+
+  >* {
+    grid-column: 2/3;
+  }
+
+  kn-file-upload-layout-header-web {
+    grid-row: 1/2;
+    grid-column: 1/-1;
+  }
+
+  kn-file-upload-selection-web {
+    grid-row: 2/3;
+  }
+
+  kn-file-upload-preview-web {
+    grid-row: 2/4;
+  }
+}

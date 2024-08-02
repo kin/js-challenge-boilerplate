@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FileUploadLayoutComponent } from '../file-upload-layout';
+import { FileUploadModalComponent } from '../file-upload-modal';
 
 @Component({
   selector: 'kn-file-upload',
@@ -9,8 +10,7 @@ import { FileUploadLayoutComponent } from '../file-upload-layout';
   standalone: true,
   imports: [
     FileUploadLayoutComponent,
+    FileUploadModalComponent,
   ]
 })
-export class FileUploadComponent {
-
-}
+export class FileUploadComponent { }

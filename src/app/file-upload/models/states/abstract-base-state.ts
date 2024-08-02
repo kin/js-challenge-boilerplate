@@ -5,7 +5,6 @@ import {
   FileUploadStateOptions
 } from './file-upload-state.interface';
 import { FileUploadStateFlags as Flags } from './file-upload-state-flags.enum';
-import { PolicyRecord } from '../policy-records';
 
 export function abstractBaseState(
   internals: FileUploadStateInternals
@@ -18,12 +17,16 @@ export function abstractBaseState(
     fileSize: prop(getter(getFileSize)),
     flags: prop(getter(() => internals.flags)),
     policies: prop(getter(() => internals.policies.all)),
+    submissionId: prop(getter(() => internals.submissionId || ''))
   } as ObjectProps<FileUploadState>);
 
   return thisState;
 
   function cleanUpAndSuspend(): void {
     delete internals.file;
+    delete internals.submissionId;
+
+    internals.policies = { all: [], byId: new Map() };
     internals.flags = Flags.None;
     internals.setState(Flags.Idle);
   }
@@ -49,10 +52,6 @@ export function abstractBaseState(
       return `${size} bytes`;
     }
     return '';
-  }
-
-  function getPolicies(): PolicyRecord[] {
-    return internals.policies.all;
   }
 
   function stateFn({

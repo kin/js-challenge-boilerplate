@@ -1,0 +1,16 @@
+<div class="record-number header"></div>
+<div class="policy-number header">Policy Number</div>
+<div class="status header">Status</div>
+@for (policy of policies(); track policy.policyNumber; let idx = $index, odd = $even, last = $last) {
+  <div class="record-number" [ngClass]="{'odd': odd, 'last': last}">{{idx + 1}}</div>
+  <div class="policy-number" [ngClass]="{'odd': odd, 'last': last}">{{policy.policyNumber}}</div>
+  <div class="status" [ngClass]="{'odd': odd, 'last': last, 'error': !policy.isValid}">
+    @if (policy.isValid) {
+      <span class="material-symbols-outlined filled icon">&#xe86c;</span>
+      <span class="description">valid</span>
+    } @else {
+      <span class="material-symbols-outlined filled icon">&#xe5c9;</span>
+      <span class="description">error</span>
+    }
+  </div>
+}

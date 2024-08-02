@@ -1,0 +1,12 @@
+@if(size(); as size) {
+  <div class="kn-simple-spinner__container" 
+    [style.margin-top.px]="-1 * (size/2)"
+    [style.margin-left.px]="-1 * (size/2)"
+    [style.height.px]="size"
+    [style.width.px]="size">
+    <span class="material-symbols-outlined kn-simple-spinner__icon" 
+      [style.font-size.px]="size">
+      progress_activity
+    </span>
+  </div>
+}
