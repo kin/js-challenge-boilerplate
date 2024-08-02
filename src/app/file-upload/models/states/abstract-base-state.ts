@@ -5,7 +5,6 @@ import {
   FileUploadStateOptions
 } from './file-upload-state.interface';
 import { FileUploadStateFlags as Flags } from './file-upload-state-flags.enum';
-import { PolicyRecord } from '../policy-records';
 
 export function abstractBaseState(
   internals: FileUploadStateInternals

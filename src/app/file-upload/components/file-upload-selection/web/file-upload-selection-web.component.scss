@@ -1,7 +1,7 @@
 :host {
   align-content: center;
-  background-color: var(--color-neutral-200);
-  border: 2px dashed var(--color-neutral-400);
+  background-color: var(--color-neutral-300);
+  border: 2px dashed var(--color-border-default);
   border-radius: 8px;
   box-sizing: border-box;
   color: var(--color-neutral-700);
@@ -13,17 +13,9 @@
   padding: 16px;
   row-gap: 8px;
 
-  .title,
-  .guidance {
+  .kn-file-upload-selection-web__guidance {
+    font-size: 14px;
     margin: 0;
     padding: 0;
-  }
-
-  .title {
-    font-weight: 600;
-  }
-
-  .guidance {
-    font-size: 14px;
   }
 }

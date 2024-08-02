@@ -1,1 +1,2 @@
-export * from './file-upload-selection.component';
+export * from './handset';
+export * from './web';

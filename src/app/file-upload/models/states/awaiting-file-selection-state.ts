@@ -4,7 +4,6 @@ import {
   FileUploadStateInternals as StateInternals,
   FileUploadState as State,
   FileUploadStateOptions as StateOptions,
-  FileUploadStateFactoryFn as DecoratorFn
 } from './file-upload-state.interface';
 import { fileUploadStatesFactory } from './file-upload-states-factory';
 import { abstractBaseState } from './abstract-base-state';

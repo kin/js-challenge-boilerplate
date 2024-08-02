@@ -1,0 +1,11 @@
+<kn-dialog>
+  <kn-dialog-title>Success</kn-dialog-title>
+  <div class="message">
+    <span class="material-symbols-outlined filled icon">check_circle</span>
+    <div>The Policies were submitted succesfully.</div>
+  </div>
+  <div class="submission-info">Submission ID: {{submissionId()}}</div>
+  <kn-dialog-actions style="grid-template-columns: 1fr; justify-items: center;">
+    <button class="kn-button success" (click)="dismiss()">OK</button>
+  </kn-dialog-actions>
+</kn-dialog>

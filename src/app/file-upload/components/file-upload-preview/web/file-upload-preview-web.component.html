@@ -1,0 +1,20 @@
+  <div class="kn-upload-preview__header">
+    @if (fileName(); as name) {
+      <div class="kn-upload-preview__file">
+        <div class="kn-upload-preview__file-name">{{name}}</div> 
+        <div class="kn-upload-preview__file-size">{{fileSize()}}</div>
+      </div>
+    }
+    @if (showMenuButton()) {
+      <kn-file-selection-button
+        [accept]="['.csv']" 
+        (fileSelected)="selectFile($event)"
+        primary
+        stroked>
+        Select a new file
+      </kn-file-selection-button>
+    }
+  </div>
+@if (policies().length > 0) {
+  <kn-file-upload-policies-table />
+}

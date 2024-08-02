@@ -1,27 +1,44 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FileUploadSelectionComponent } from '../file-upload-selection';
-import { FileUploadPreviewComponent } from '../file-upload-preview';
+import { ChangeDetectionStrategy, Component, computed, inject, Signal } from '@angular/core';
 import { FileUploadStateContext } from '@file-upload/providers';
+import { FileUploadStateFlags as StateFlags } from '@file-upload/models';
+import { DeviceComponent } from '@shared/components';
+import { FileUploadLayoutWebComponent } from './web';
+import { FileUploadLayoutHandsetComponent } from './handset';
 
 @Component({
   selector: 'kn-file-upload-layout',
   template: `
-    <h1 class='page-header'>OCR File Upload</h1>
-    <kn-file-upload-selection (fileDropped)="selectFile($event)" />
-    <kn-file-upload-preview />
+    @switch (device()) {
+      @case (Device.Web) {
+        @defer {
+          <kn-file-upload-layout-web />
+        }
+      }
+      @default {
+        @defer {
+          <kn-file-upload-layout-handset />
+        }
+      }
+    }
   `,
   styleUrls: ['./file-upload-layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    FileUploadPreviewComponent,
-    FileUploadSelectionComponent
+    FileUploadLayoutWebComponent,
+    FileUploadLayoutHandsetComponent,
   ]
 })
-export class FileUploadLayoutComponent {
+export class FileUploadLayoutComponent extends DeviceComponent {
   public selectFile = selectFileFn();
+  public showSelection = computeShowSelection();
 }
 
+function computeShowSelection(): Signal<number> {
+  const ctx = inject(FileUploadStateContext);
+
+  return computed(() => ctx.state().flags & StateFlags.AwaitingFileSelection)
+}
 function selectFileFn(): (fileList: any) => void {
   const ctx = inject(FileUploadStateContext);
 

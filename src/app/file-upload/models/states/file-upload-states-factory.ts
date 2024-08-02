@@ -6,7 +6,6 @@ import { fileUploadNoopState } from './file-upload-noop-state';
 import { FileUploadStateFlags } from './file-upload-state-flags.enum';
 import {
   FileUploadState,
-  FileUploadStateDecoratorFactoryFn,
   FileUploadStateFactoryFn,
   FileUploadStateInternals
 } from './file-upload-state.interface';

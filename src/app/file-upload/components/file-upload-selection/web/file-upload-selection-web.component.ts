@@ -1,12 +1,14 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, inject } from '@angular/core';
 import { FileUploadStateContext } from '@file-upload/providers/file-upload-state-context';
 import { FileSelectionLinkComponent } from '@shared/components';
 import { FileDropTargetDirective } from '@shared/directives';
 
+const selector = 'kn-file-upload-selection-web';
+
 @Component({
-  selector: 'kn-file-upload-selection',
-  templateUrl: './file-upload-selection.component.html',
-  styleUrls: ['./file-upload-selection.component.scss'],
+  selector,
+  templateUrl: 'file-upload-selection-web.component.html',
+  styleUrl: 'file-upload-selection-web.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   hostDirectives: [{
@@ -15,8 +17,11 @@ import { FileDropTargetDirective } from '@shared/directives';
   }],
   imports: [FileSelectionLinkComponent]
 })
-export class FileUploadSelectionComponent {
+export class FileUploadSelectionWebComponent {
   public selectFile = selectFileFn();
+
+  @HostBinding('class')
+  public readonly klass = selector;
 }
 
 function selectFileFn(): (file: File) => void {

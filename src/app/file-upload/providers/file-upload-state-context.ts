@@ -5,15 +5,17 @@ import {
   FileUploadStateFlags,
   fileUploadStatesFactory
 } from '@file-upload/models';
+import { PoliciesDataClient } from './policies-data-client';
+import { FileUploadModal } from './file-upload-modal';
 
 @Injectable({ providedIn: 'root' })
 export class FileUploadStateContext {
   readonly state: Signal<FileUploadState>;
 
-  constructor() {
+  constructor(data: PoliciesDataClient, modal: FileUploadModal) {
     const state = signal(fileUploadNoopState());
     const setState = setStateFn(state);
-    const createState = fileUploadStatesFactory({ setState });
+    const createState = fileUploadStatesFactory({ setState, data, modal });
 
     setState(createState(FileUploadStateFlags.Idle));
     this.state = state;

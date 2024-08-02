@@ -1,0 +1,34 @@
+$pad: var(--pad-base);
+
+:host {
+  align-items: flex-start;
+  box-sizing: border-box;
+  display: grid;
+  grid-template: min-content / 1fr;
+  height: 100%;
+  overflow: auto;
+  padding: 64px 8px 72px 8px;
+  row-gap: 8px;
+  width: 100%;
+
+  >* {
+    grid-column: 1/2;
+  }
+
+  kn-file-upload-layout-header-handset,
+  kn-file-upload-layout-footer-handset {
+    position: fixed;
+    height: auto;
+    left: 0;
+    right: 0;
+    z-index: 999;
+  }
+
+  kn-file-upload-layout-header-handset {
+    top: 0;
+  }
+
+  kn-file-upload-layout-footer-handset {
+    bottom: 0;
+  }
+}

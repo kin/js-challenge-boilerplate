@@ -1,5 +1,11 @@
 import { take } from 'rxjs';
-import { initialValue, ObjectProps, prop, readOnly } from '@shared/models';
+import {
+  getter,
+  initialValue,
+  ObjectProps,
+  prop,
+  readOnly
+} from '@shared/models';
 import { FileUploadStateFlags as Flags } from './file-upload-state-flags.enum';
 import {
   FileUploadStateInternals as StateInternals,
@@ -19,7 +25,7 @@ function state(internals: StateInternals): State {
 
   Object.defineProperties(thisState, {
     ...Object.getOwnPropertyDescriptors(baseState),
-    description: prop(initialValue('File Selected'), readOnly)
+    description: prop(initialValue('File Selected'), readOnly),
   } as ObjectProps<State>);
 
   return thisState;
@@ -27,6 +33,8 @@ function state(internals: StateInternals): State {
   function handleFile(file: File): void {
     const nextState = internals.setState(Flags.AwaitingFileValidation);
 
+    delete internals.file;
+    internals.policies.all = [];
     nextState({ file });
   }
 

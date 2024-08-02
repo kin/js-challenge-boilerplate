@@ -13,7 +13,7 @@ let uniqueId = 1;
 
 @Component({
   selector,
-  styleUrls: ['./file-selection-link.component.scss'],
+  styleUrl: 'file-selection-link.component.scss',
   template: `
     <label [attr.for]="elementId()" tabindex="0">
       <ng-content />

@@ -1,0 +1,46 @@
+:host {
+  display: block;
+  padding: 0;
+  position: relative;
+
+  .kn-simple-spinner__container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-bottom: 0;
+    margin-right: 0;
+    
+    -webkit-animation: spin 2s linear infinite;
+    -moz-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+
+  .kn-simple-spinner__prototype {
+    font-size: 1px;
+    height: 0;
+    width: 0;
+  }
+
+  .kn-simple-spinner__icon {
+    color: var(--color-secondary-600);
+  }
+}
+
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

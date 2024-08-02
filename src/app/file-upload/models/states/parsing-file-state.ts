@@ -28,7 +28,7 @@ function state(internals: StateInternals): State {
   try {
     return thisState;
   } finally {
-    setTimeout(parseFile, 0);
+    setTimeout(parseFile, 100);
   }
 
   function parseFile(): void {
@@ -36,15 +36,15 @@ function state(internals: StateInternals): State {
 
     fromEvent(reader, 'load').pipe(
       map((e: any) => e.target!.result),
-      map(x => x.split('\r\n')),
+      map((x: string) => x.split(',')),
       take(1)
-    ).subscribe(data => {
-      const size = data.length - 2;
+    ).subscribe(policyNumberData => {
+      const size = policyNumberData;
 
-      internals.policies.all = new Array(size);
+      internals.policies.all = new Array(policyNumberData.length);
 
-      for (let i = 0; i < size; i++) {
-        internals.policies.all[i] = policyRecord(data[i + 1]);
+      for (const [i, p] of policyNumberData.entries()) {
+        internals.policies.all[i] = policyRecord(+p);
       }
       internals.modal.dismiss();
       internals.setState(Flags.FileSelected);

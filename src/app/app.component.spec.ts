@@ -2,7 +2,7 @@ import * as sinon from 'sinon';
 mockImports();
 
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 
 describe('The AppComponent class:', () => {
@@ -25,9 +25,9 @@ describe('The AppComponent class:', () => {
         expect(cfg.standalone).toBe(true);
       });
 
-      it('should import the RouterOutlet', () => {
+      it('should import the RouterModule', () => {
         expect(cfg.imports).toBeDefined();
-        expect(cfg.imports!.includes(RouterOutlet)).toBe(true);
+        expect(cfg.imports!.includes(RouterModule)).toBe(true);
       });
     });
 

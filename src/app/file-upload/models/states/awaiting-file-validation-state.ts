@@ -35,10 +35,12 @@ function state(internals: StateInternals): State {
     const maxSize = 2000000; // 2mb
 
     if (!validFileTypes.has(file.type)) {
-      internals.flags |= Flags.InvalidFileType;
+      internals.setState(Flags.FileTypeError);
+      return;
     }
     if (file.size > maxSize) {
-      internals.flags |= Flags.ExceedsMaxFileSize;
+      internals.setState(Flags.FileSizeError);
+      return;
     }
 
     if (internals.flags & Flags.AnyFileError) {

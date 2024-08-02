@@ -35,10 +35,6 @@ export interface FileUploadStateOptions {
   suspend?: boolean;
 }
 
-export type FileUploadStateDecoratorFactoryFn = (
-  internals: FileUploadStateInternals
-) => () => FileUploadState;
-
 export type FileUploadStateFactoryFn = (
   internals: FileUploadStateInternals,
 ) => FileUploadState;

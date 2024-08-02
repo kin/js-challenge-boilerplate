@@ -9,10 +9,10 @@ export enum FileUploadStateFlags {
   AwaitingSubmission = 1 << 6,
   SubmissionSuccess = 1 << 7,
   SubmissionError = 1 << 8,
-  ExceedsMaxFileSize = 1 << 20,
-  InvalidFileType = 1 << 21,
+  FileSizeError = 1 << 20,
+  FileTypeError = 1 << 21,
   AnyFileError = (
-    InvalidFileType |
-    ExceedsMaxFileSize
+    FileTypeError |
+    FileSizeError
   )
 }
