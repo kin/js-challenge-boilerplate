@@ -2,6 +2,8 @@
   display: grid;
   grid-template: auto 1fr / 1fr;
   row-gap: 8px;
+  overflow: auto;
+  padding: 8px 8px 0 8px;
 
   .kn-upload-preview__header {
     align-items: center;

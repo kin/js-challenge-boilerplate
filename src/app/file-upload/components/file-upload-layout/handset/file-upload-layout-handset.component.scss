@@ -3,27 +3,34 @@ $pad: var(--pad-base);
 :host {
   align-items: flex-start;
   box-sizing: border-box;
-  display: grid;
-  grid-template: min-content / 1fr;
+  display: block;
   height: 100%;
-  overflow: auto;
-  padding: 64px 8px 72px 8px;
-  row-gap: 8px;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
   width: 100%;
 
-  >* {
-    grid-column: 1/2;
-  }
-
   kn-file-upload-layout-header-handset,
-  kn-file-upload-layout-footer-handset {
+  kn-file-upload-layout-footer-handset,
+  kn-file-upload-selection-handset,
+  kn-file-upload-preview-handset {
     position: fixed;
     height: auto;
     left: 0;
     right: 0;
-    z-index: 999;
   }
 
+  kn-file-upload-selection-handset {
+    left: 8px;
+    right: 8px;
+    top: 64px;
+  }
+
+  kn-file-upload-preview-handset {
+    bottom: 64px;
+    top: 57px;
+  }
+  
   kn-file-upload-layout-header-handset {
     top: 0;
   }
