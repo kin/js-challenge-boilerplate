@@ -1,6 +1,6 @@
 import { inject, Injectable, signal, Signal } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { combineLatest, filter, map, tap } from 'rxjs';
+import { combineLatest, debounceTime, filter, map, tap } from 'rxjs';
 import { DeviceFlags } from '@shared/models';
 
 @Injectable({ providedIn: 'root' })
@@ -28,6 +28,7 @@ function flagsSignal(): Signal<number> {
       Breakpoints.WebPortrait
     ]),
   ]).pipe(
+    debounceTime(300),
     map(([handset, tablet, portrait]) => {
       return [
         handset.matches
@@ -38,14 +39,15 @@ function flagsSignal(): Signal<number> {
         portrait.matches ? DeviceFlags.Portrait : DeviceFlags.Landscape
       ];
     }),
-    filter(([device, orientation]) => {
-      if (device > (currentFlags & ~DeviceFlags.AnyOrientation)) {
-        return true;
-      }
-      return orientation !== (currentFlags & ~DeviceFlags.AnyDevice);
+    map(([device, orientation]) => {
+      const currentDevice = currentFlags & ~DeviceFlags.AnyOrientation;
+
+      currentFlags = device > currentDevice
+        ? device | orientation
+        : currentDevice | orientation;
+
+      return currentFlags;
     }),
-    map(x => x.reduce((f, y) => f | y, DeviceFlags.None)),
-    tap(x => currentFlags = x)
   ).subscribe(x => {
     console.log(x);
     flags.set(x);
