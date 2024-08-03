@@ -43,11 +43,7 @@ function state(internals: StateInternals): State {
       return;
     }
 
-    if (internals.flags & Flags.AnyFileError) {
-      internals.setState(Flags.AwaitingFileSelection);
-    } else {
-      internals.file = file;
-      internals.setState(Flags.ParsingFile);
-    }
+    internals.file = file;
+    internals.setState(Flags.ParsingFile);
   }
 }
