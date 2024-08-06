@@ -1,4 +1,3 @@
-import { initialValue, ObjectProps, prop, readOnly } from '@shared/models';
 import { FileUploadStateFlags as Flags } from './file-upload-state-flags.enum';
 import {
   FileUploadStateInternals as StateInternals,
@@ -16,10 +15,9 @@ function state(internals: StateInternals): State {
   const baseState = abstractBaseState(internals);
   const thisState = stateFn as State;
 
-  Object.defineProperties(thisState, {
-    ...Object.getOwnPropertyDescriptors(baseState),
-    description: prop(initialValue('Idle State'), readOnly)
-  } as ObjectProps<State>);
+  Object.assign(thisState, baseState, {
+    description: 'Idle'
+  } as { [p in keyof State]: any; });
 
   return thisState;
 

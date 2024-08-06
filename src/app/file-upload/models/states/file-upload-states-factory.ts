@@ -1,7 +1,6 @@
 import { Modal } from '@shared/models';
 import { PoliciesDataClient } from '../data';
 import { PolicyRecord } from '../policy-records';
-import { abstractBaseState } from './abstract-base-state';
 import { fileUploadNoopState } from './file-upload-noop-state';
 import { FileUploadStateFlags } from './file-upload-state-flags.enum';
 import {

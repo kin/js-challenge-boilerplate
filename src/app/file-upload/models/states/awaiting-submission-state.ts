@@ -1,4 +1,3 @@
-import { initialValue, ObjectProps, prop, readOnly } from '@shared/models';
 import { FileUploadStateFlags as Flags } from './file-upload-state-flags.enum';
 import {
   FileUploadStateInternals as StateInternals,
@@ -14,16 +13,14 @@ fileUploadStatesFactory.register(ID, state);
 
 function state(internals: StateInternals): State {
   const baseState = abstractBaseState(internals);
-  const thisState = stateFn as State;
 
-  Object.defineProperties(thisState, {
-    ...Object.getOwnPropertyDescriptors(baseState),
-    description: prop(initialValue('Awaiting Policies Submission'), readOnly)
-  } as ObjectProps<State>);
-
-  internals.modal.open();
-
-  return thisState;
+  try {
+    return Object.assign(stateFn, baseState, {
+      description: 'Awaiting Policies Submission'
+    } as { [p in keyof State]: any; });
+  } finally {
+    internals.modal.open();
+  }
 
   function stateFn(options: StateOptions): void {
     const { submissionId } = options;

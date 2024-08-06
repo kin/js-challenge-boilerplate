@@ -20,6 +20,7 @@ import { FileUploadLayoutHandsetComponent } from './handset';
         }
       }
     }
+    <span class="material-symbols-outlined hidden-icon">progress_activity</span>
   `,
   styleUrls: ['./file-upload-layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
