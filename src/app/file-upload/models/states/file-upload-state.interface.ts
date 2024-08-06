@@ -7,7 +7,7 @@ export interface FileUploadState extends FileUploadStateFn {
   fileName: string;
   fileSize: string;
   flags: number;
-  policies: PolicyRecord[];
+  policies: Readonly<PolicyRecord[]>;
   submissionId: string;
 }
 
@@ -22,7 +22,10 @@ export interface FileUploadStateInternals {
     all: PolicyRecord[];
     byId: Map<number, PolicyRecord>;
   };
-  file?: File;
+  file?: {
+    name: string;
+    size: number;
+  };
   submissionId?: string;
 }
 

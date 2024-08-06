@@ -1,11 +1,4 @@
 import { take } from 'rxjs';
-import {
-  getter,
-  initialValue,
-  ObjectProps,
-  prop,
-  readOnly
-} from '@shared/models';
 import { FileUploadStateFlags as Flags } from './file-upload-state-flags.enum';
 import {
   FileUploadStateInternals as StateInternals,
@@ -23,12 +16,9 @@ function state(internals: StateInternals): State {
   const baseState = abstractBaseState(internals);
   const thisState = stateFn as State;
 
-  Object.defineProperties(thisState, {
-    ...Object.getOwnPropertyDescriptors(baseState),
-    description: prop(initialValue('File Selected'), readOnly),
-  } as ObjectProps<State>);
-
-  return thisState;
+  return Object.assign(thisState, baseState, {
+    description: 'File Selected'
+  } as { [p in keyof State]: any; });
 
   function handleFile(file: File): void {
     const nextState = internals.setState(Flags.AwaitingFileValidation);

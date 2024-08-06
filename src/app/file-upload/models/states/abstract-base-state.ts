@@ -1,4 +1,3 @@
-import { getter, initialValue, ObjectProps, prop } from '@shared/models';
 import {
   FileUploadState,
   FileUploadStateInternals,
@@ -9,18 +8,15 @@ import { FileUploadStateFlags as Flags } from './file-upload-state-flags.enum';
 export function abstractBaseState(
   internals: FileUploadStateInternals
 ): FileUploadState {
-  const thisState = stateFn as FileUploadState;
+  return Object.assign(stateFn, {
+    description: 'No State',
+    fileName: getFileName(),
+    fileSize: getFileSize(),
+    flags: internals.flags,
+    policies: Object.freeze(internals.policies.all),
+    submissionId: internals.submissionId || '',
+  } as { [p in keyof FileUploadState]: any; });
 
-  Object.defineProperties(thisState, {
-    description: prop(initialValue('No State')),
-    fileName: prop(getter(getFileName)),
-    fileSize: prop(getter(getFileSize)),
-    flags: prop(getter(() => internals.flags)),
-    policies: prop(getter(() => internals.policies.all)),
-    submissionId: prop(getter(() => internals.submissionId || ''))
-  } as ObjectProps<FileUploadState>);
-
-  return thisState;
 
   function cleanUpAndSuspend(): void {
     delete internals.file;

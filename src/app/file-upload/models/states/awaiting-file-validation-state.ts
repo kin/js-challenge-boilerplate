@@ -1,4 +1,3 @@
-import { initialValue, ObjectProps, prop, readOnly } from '@shared/models';
 import { FileUploadStateFlags as Flags } from './file-upload-state-flags.enum';
 import {
   FileUploadStateInternals as StateInternals,
@@ -15,14 +14,10 @@ fileUploadStatesFactory.register(ID, state);
 
 function state(internals: StateInternals): State {
   const baseState = abstractBaseState(internals);
-  const thisState = stateFn as State;
 
-  Object.defineProperties(thisState, {
-    ...Object.getOwnPropertyDescriptors(baseState),
-    description: prop(initialValue('Awaiting File Validation'), readOnly)
-  } as ObjectProps<State>);
-
-  return thisState;
+  return Object.assign(stateFn, baseState, {
+    description: 'Awaiting File Validation'
+  } as { [p in keyof State]: any; });
 
   function stateFn(options: StateOptions): void {
     if (options.file) {
@@ -43,7 +38,8 @@ function state(internals: StateInternals): State {
       return;
     }
 
-    internals.file = file;
-    internals.setState(Flags.ParsingFile);
+    const nextState = internals.setState(Flags.ParsingFile);
+
+    nextState({ file });
   }
 }

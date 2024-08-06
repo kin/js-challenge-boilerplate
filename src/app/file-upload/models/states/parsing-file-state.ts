@@ -1,4 +1,4 @@
-import { initialValue, ObjectProps, prop, readOnly } from '@shared/models';
+import { take } from 'rxjs';
 import { FileUploadStateFlags as Flags } from './file-upload-state-flags.enum';
 import {
   FileUploadStateInternals as StateInternals,
@@ -8,7 +8,7 @@ import {
 import { fileUploadStatesFactory } from './file-upload-states-factory';
 import { abstractBaseState } from './abstract-base-state';
 import { policyRecord } from '../policy-records';
-import { fromEvent, map, take } from 'rxjs';
+import { readFile } from '../read-file';
 
 const ID = Flags.ParsingFile
 
@@ -18,42 +18,32 @@ function state(internals: StateInternals): State {
   const baseState = abstractBaseState(internals);
   const thisState = stateFn as State;
 
-  Object.defineProperties(thisState, {
-    ...Object.getOwnPropertyDescriptors(baseState),
-    description: prop(initialValue('Parsing File State'), readOnly)
-  } as ObjectProps<State>);
-
-  internals.modal.open();
+  Object.assign(thisState, baseState, {
+    description: 'Parsing File'
+  } as { [p in keyof State]: any; });
 
   try {
     return thisState;
   } finally {
-    setTimeout(parseFile, 100);
-  }
-
-  function parseFile(): void {
-    const reader = new FileReader();
-
-    fromEvent(reader, 'load').pipe(
-      map((e: any) => e.target!.result),
-      map((x: string) => x.split(',')),
-      take(1)
-    ).subscribe(policyNumberData => {
-      const size = policyNumberData;
-
-      internals.policies.all = new Array(policyNumberData.length);
-
-      for (const [i, p] of policyNumberData.entries()) {
-        internals.policies.all[i] = policyRecord(+p);
-      }
-      internals.modal.dismiss();
-      internals.setState(Flags.FileSelected);
-    });
-
-    reader.readAsText(internals.file!, 'utf-8');
+    internals.modal.open();
   }
 
   function stateFn(options: StateOptions): void {
+    if (options.file) {
+      internals.file = {
+        name: options.file.name,
+        size: options.file.size
+      };
+      readFile(options.file).pipe(take(1)).subscribe(policyNumberData => {
+        internals.policies.all = new Array(policyNumberData.length);
+
+        for (const [i, p] of policyNumberData.entries()) {
+          internals.policies.all[i] = policyRecord(+p);
+        }
+        internals.modal.dismiss();
+        internals.setState(Flags.FileSelected);
+      });
+    }
     baseState(options);
   }
 }

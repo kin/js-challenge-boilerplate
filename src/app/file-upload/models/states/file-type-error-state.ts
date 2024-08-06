@@ -1,4 +1,3 @@
-import { initialValue, ObjectProps, prop, readOnly } from '@shared/models';
 import { FileUploadStateFlags as Flags } from './file-upload-state-flags.enum';
 import {
   FileUploadStateInternals as StateInternals,
@@ -16,14 +15,15 @@ function state(internals: StateInternals): State {
   const baseState = abstractBaseState(internals);
   const thisState = stateFn as State;
 
-  Object.defineProperties(thisState, {
-    ...Object.getOwnPropertyDescriptors(baseState),
-    description: prop(initialValue('File Type Error State'), readOnly)
-  } as ObjectProps<State>);
+  Object.assign(thisState, baseState, {
+    description: 'File Type Error State'
+  } as { [p in keyof State]: any; });
 
-  internals.modal.open();
-  
-  return thisState;
+  try {
+    return thisState;
+  } finally {
+    internals.modal.open();
+  }
 
   function stateFn(options: StateOptions): void {
     const { submit } = options;
