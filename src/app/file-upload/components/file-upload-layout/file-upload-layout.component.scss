@@ -3,4 +3,8 @@ $pad: var(--pad-base);
 :host {
   display: block;
   height: 100%;
+
+  .hidden-icon {
+    color: transparent;
+  }
 }
