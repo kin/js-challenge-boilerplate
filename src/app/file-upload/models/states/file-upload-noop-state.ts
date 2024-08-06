@@ -2,9 +2,7 @@ import { FileUploadState } from './file-upload-state.interface';
 import { FileUploadStateFlags } from './file-upload-state-flags.enum';
 
 export function fileUploadNoopState(): FileUploadState {
-  const thisState = {} as FileUploadState;
-
-  Object.assign(thisState, {
+  return Object.assign(stateFn, {
     description: 'No State',
     fileName: '',
     fileSize: '',
@@ -13,5 +11,5 @@ export function fileUploadNoopState(): FileUploadState {
     submissionId: '',
   } as { [p in keyof FileUploadState]: any; });
 
-  return thisState;
+  function stateFn(): void { }
 }
