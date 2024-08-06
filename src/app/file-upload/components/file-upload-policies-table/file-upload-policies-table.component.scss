@@ -1,0 +1,66 @@
+$border: 1px solid var(--color-border-default);
+
+:host {
+  align-items: flex-start;
+  background-color: var(--color-neutral-white);
+  border: $border;
+  display: grid;
+  font-size: 14px;
+  grid-template: min-content / 80px repeat(2, 1fr);
+  grid-auto-rows: min-content;
+  overflow-y: auto;
+  position: relative;
+
+  .record-number,
+  .policy-number,
+  .status {
+    &.header {
+      background-color: var(--color-neutral-white);
+      color: var(--color-neutral-600);
+      font-size: 12px;
+      position: sticky;
+      text-transform: uppercase;
+      top: 0;
+    }
+
+    &.odd {
+      background-color: var(--color-neutral-300);
+    }
+
+    align-items: center;
+    display: flex;
+    border-bottom: $border;
+    padding: 16px;
+  }
+
+  .record-number {
+    box-sizing: border-box;
+    font-size: 14px;
+    grid-column: 1/2;
+    height: 100%;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .policy-number {
+    border-left: $border;
+    grid-column: 2/3;
+  }
+
+  .status {
+    border-left: $border;
+    column-gap: 4px;
+    grid-column: 3/4;
+
+    &.error {
+      .icon {
+        color: var(--color-warning);
+      }
+    }
+
+    .icon {
+      color: var(--color-success);
+      font-size: 18px;
+    }
+  }
+}

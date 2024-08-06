@@ -1,0 +1,9 @@
+<p class="kn-file-upload-selection-web__guidance">You can upload CSV files. The max file size is 2mb.</p>
+<p class="kn-file-upload-selection-web__guidance">
+  <span>Drag and drop or </span>
+  <kn-file-selection-link 
+    [accept]="['.csv']"
+    (fileSelected)="selectFile($event)">
+    choose file
+  </kn-file-selection-link>
+</p>

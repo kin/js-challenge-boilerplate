@@ -1,0 +1,17 @@
+@switch (modal()) {
+  @case (Modal.ParsingFile) {
+    <kn-file-upload-modal-parsing-file />
+  }
+  @case (Modal.AwaitingSubmission) {
+    <kn-file-upload-modal-sending-data />
+  }
+  @case (Modal.SubmissionSuccess) {
+    <kn-file-upload-modal-submission-success />
+  }
+  @case (Modal.FileSizeError) {
+    <kn-file-upload-modal-file-size-error />
+  }
+  @case (Modal.FileTypeError) {
+    <kn-file-upload-modal-file-type-error />
+  }
+}

@@ -1,0 +1,29 @@
+$pad: var(--pad-base);
+
+:host {
+  align-content: center;
+  background-color: var(--color-neutral-white);
+  border: 1px solid var(--color-border-default);
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: var(--color-neutral-700);
+  display: grid;
+  grid-auto-rows: min-content;
+  grid-template: min-content / 1fr;
+  justify-items: center;
+  min-height: 120px;
+  padding: $pad;
+  row-gap: $pad;
+
+  .kn-file-upload-selection__guidance {
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    width: 60%;
+  }
+
+  .kn-file-selection-button {
+    width: 100%;
+  }
+}

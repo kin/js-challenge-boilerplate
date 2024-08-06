@@ -1,0 +1,9 @@
+### POST Policy Records
+POST https://jsonplaceholder.typicode.com/posts
+Content-Type: application/json
+
+[
+  { "policyNumber": 345882865, "isValid": true },
+  { "policyNumber": 457508000, "isValid": true },
+  { "policyNumber": 664371495, "isValid": false }
+]

@@ -1,3 +1,8 @@
+@use '@angular/cdk' as cdk;
+@use 'sass:math';
+
+@include cdk.overlay();
+
 :root {
   --color-primary: #ffc857;
   --color-primary-100: #fbf8f3;
@@ -47,4 +52,100 @@
   --color-neutral-600: #757575;
   --color-neutral-700: #616161;
   --color-neutral-800: #3e3e3e;
+  --pad-base: 16px;
+
+  --color-border-default: var(--color-neutral-400);
+  --color-bg-default: var(--color-neutral-100);
+  --color-neutral-muted: rgba(0, 0, 0, .54);
+
+  color: var(--color-neutral-black);
+  font-family: "Open Sans", sans-serif;
+
+  body {
+    background-color: var(--color-bg-default);
+    padding: 0;
+    margin: 0;
+  }
+
+  .kn-button {
+    background-color: var(--color-neutral-400);
+    border: 1px solid var(--color-neutral-400);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 16px;
+
+    &[disabled] {
+      background-color: var(--color-neutral-300);
+      color: var(--color-neutral-500);
+      cursor: default;
+
+      &.primary {
+        background-color: var(--color-secondary-200);
+        border-color: var(--color-secondary-200);
+        color: var(--color-neutral-white);
+      }
+
+      &.icon {
+        background-color: transparent;
+      }
+    }
+
+    &.stroked {
+      background-color: var(--color-neutral-white);
+      border: 1px solid var(--color-secondary);
+      color: var(--color-secondary);
+      transition: all 400ms ease-in-out;
+
+      &:hover {
+        background-color: var(--color-secondary-100);
+      }
+    }
+
+    &.primary {
+      background-color: var(--color-secondary-400);
+      color: var(--color-neutral-white);
+      border-color: var(--color-secondary-400);
+    }
+
+    &.icon {
+      $size: 32px;
+      align-items: center;
+      background-color: transparent;
+      border-color: transparent;
+      border-radius: math.div($size, 2);
+      display: flex;
+      justify-content: center;
+      height: $size;
+      width: $size;
+    }
+
+    &.success {
+      background-color: var(--color-success);
+      color: var(--color-neutral-white);
+      border-color: var(--color-success);
+    }
+
+    &.error {
+      background-color: var(--color-warning);
+      color: var(--color-neutral-white);
+      border-color: var(--color-warning);
+    }
+  }
+}
+
+.material-symbols-outlined {
+  &.filled {
+    font-variation-settings:
+      'FILL' 1,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24;
+  }
+
+  font-variation-settings: 'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
 }

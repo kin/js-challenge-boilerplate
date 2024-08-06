@@ -1,0 +1,33 @@
+:host {
+  display: grid;
+  grid-template: auto 1fr / 1fr;
+  row-gap: 8px;
+
+  .kn-upload-preview__header {
+    align-items: baseline;
+    display: grid;
+    grid-template: 40px / 1fr auto;
+    row-gap: var(--pad-base);
+    >* {
+      grid-row: 1/2;
+    }
+  }
+
+  .kn-upload-preview__file {
+    align-items: baseline;
+    column-gap: 8px;
+    display: grid;
+    grid-template: auto / auto 1fr;
+    font-size: 18px;
+    justify-items: flex-start;
+
+    .kn-upload-preview__file-name {
+      font-weight: 500;
+    }
+
+    .kn-upload-preview__file-size {
+      color: var(--color-neutral-600);
+      font-size: 12px;
+    }
+  }
+}
