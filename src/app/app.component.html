@@ -18,7 +18,10 @@
   <tbody>
     <tr *ngFor="let row of tableData; let i = index">
       <td>{{ i + 1 }}</td>
-      <td>{{ row.policyNumber }}</td>
+      <td>
+        {{ row.policyNumber }}
+        <span *ngIf="row.isDuplicate" title="Duplicate" style="color: red;">🚩</span>
+      </td>
       <td>
         <span [ngStyle]="{
           color: row.result === 'INVALID' ? 'orange' : (row.result === 'ERROR' ? 'red' : 'inherit')
@@ -29,6 +32,11 @@
     </tr>
   </tbody>
 </table>
+
+<div style="margin: 1rem 0 0.5rem 0;" *ngIf="hasDuplicatePolicy">
+  <span style="color: red; font-size: 1.2em;">🚩</span>
+  <span style="margin-left: 0.5em;">Duplicate policy number</span>
+</div>
 
 <button
   *ngIf="hasValidPolicy"

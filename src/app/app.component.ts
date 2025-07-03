@@ -16,7 +16,7 @@ export type PolicyResult = 'VALID' | 'ERROR' | 'INVALID';
 export class AppComponent {
   title = 'kin-ocr';
   csvContent: string | null = null;
-  tableData: { policyNumber: string; result: PolicyResult }[] = [];
+  tableData: { policyNumber: string; result: PolicyResult; isDuplicate: boolean }[] = [];
   postResult: { success: boolean; id?: number; error?: string } | null = null;
   isSubmitting = false;
 
@@ -33,19 +33,25 @@ export class AppComponent {
     this.postResult = null; // Reset result on new upload
   }
 
-  parseCsv(csv: string): { policyNumber: string; result: PolicyResult }[] {
-    return csv
-      .split(',')
-      .map((policyNumber) => {
-        const trimmed = policyNumber.trim();
-        if (!/^\d{9}$/.test(trimmed)) {
-          return { policyNumber: trimmed, result: 'INVALID' };
-        }
-        return {
-          policyNumber: trimmed,
-          result: this.isValidPolicyNumber(trimmed) ? 'VALID' : 'ERROR'
-        };
-      });
+  parseCsv(csv: string): { policyNumber: string; result: PolicyResult; isDuplicate: boolean }[] {
+    const numbers = csv.split(',').map(pn => pn.trim());
+    const counts: Record<string, number> = {};
+    numbers.forEach(num => {
+      counts[num] = (counts[num] || 0) + 1;
+    });
+    return numbers.map((policyNumber) => {
+      let result: PolicyResult;
+      if (!/^\d{9}$/.test(policyNumber)) {
+        result = 'INVALID';
+      } else {
+        result = this.isValidPolicyNumber(policyNumber) ? 'VALID' : 'ERROR';
+      }
+      return {
+        policyNumber,
+        result,
+        isDuplicate: counts[policyNumber] > 1
+      };
+    });
   }
 
   isValidPolicyNumber(policy: string): boolean {
@@ -59,6 +65,10 @@ export class AppComponent {
 
   get hasValidPolicy(): boolean {
     return this.tableData.some(row => row.result === 'VALID');
+  }
+
+  get hasDuplicatePolicy(): boolean {
+    return this.tableData.some(row => row.isDuplicate);
   }
 
   submitPolicies() {
