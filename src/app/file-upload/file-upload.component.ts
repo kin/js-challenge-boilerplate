@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,13 +8,14 @@ import { CommonModule } from '@angular/common';
   template: `
     <label>
       <input #fileInput type="file" accept=".csv" (change)="onFileSelected($event)" hidden />
-      <button type="button" (click)="fileInput.click()">Upload CSV</button>
+      <button type="button" (click)="fileInput.click()" [disabled]="disabled">Upload CSV</button>
     </label>
     <div *ngIf="errorMessage" style="color: red; margin-top: 0.5rem;">{{ errorMessage }}</div>
   `
 })
 export class FileUploadComponent {
   @Output() fileLoaded = new EventEmitter<string>();
+  @Input() disabled = false;
   errorMessage: string | null = null;
 
   onFileSelected(event: Event): void {

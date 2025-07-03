@@ -116,4 +116,13 @@ export class AppComponent {
       this.sortDirection = 'asc';
     }
   }
+
+  reset() {
+    this.csvContent = null;
+    this.tableData = [];
+    this.postResult = null;
+    this.isSubmitting = false;
+    this.sortColumn = 'id';
+    this.sortDirection = 'asc';
+  }
 }

@@ -1,6 +1,7 @@
 <h1>Hello, Kin OCR</h1>
 
-<app-file-upload (fileLoaded)="onFileLoaded($event)"></app-file-upload>
+<app-file-upload (fileLoaded)="onFileLoaded($event)" [disabled]="tableData.length > 0"></app-file-upload>
+<button *ngIf="tableData.length > 0" (click)="reset()" style="margin-left: 1rem;">Reset</button>
 
 <table *ngIf="tableData.length > 0" border="1" cellpadding="8" style="margin-top: 2rem; min-width: 400px;">
   <thead>
