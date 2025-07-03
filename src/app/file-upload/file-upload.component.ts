@@ -6,17 +6,28 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <label>
+    <div class="upload-dropzone"
+         [class.disabled]="disabled"
+         (click)="!disabled && fileInput.click()"
+         (dragover)="onDragOver($event)"
+         (dragleave)="onDragLeave($event)"
+         (drop)="onDrop($event)"
+         tabindex="0"
+         role="button"
+         [attr.aria-disabled]="disabled"
+    >
       <input #fileInput type="file" accept=".csv" (change)="onFileSelected($event)" hidden />
-      <button type="button" (click)="fileInput.click()" [disabled]="disabled">Upload CSV</button>
-    </label>
-    <div *ngIf="errorMessage" style="color: red; margin-top: 0.5rem;">{{ errorMessage }}</div>
+      <div class="upload-icon">📄</div>
+      <div class="upload-message">Drag &amp; drop CSV file or click to browse</div>
+    </div>
+    <div *ngIf="errorMessage" class="upload-error">{{ errorMessage }}</div>
   `
 })
 export class FileUploadComponent {
   @Output() fileLoaded = new EventEmitter<string>();
   @Input() disabled = false;
   errorMessage: string | null = null;
+  isDragOver = false;
 
   onFileSelected(event: Event): void {
     this.errorMessage = null;
@@ -40,5 +51,24 @@ export class FileUploadComponent {
       this.fileLoaded.emit(reader.result as string);
     };
     reader.readAsText(file);
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    if (!this.disabled) this.isDragOver = true;
+  }
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    this.isDragOver = false;
+  }
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    this.isDragOver = false;
+    if (this.disabled) return;
+    const files = event.dataTransfer?.files;
+    if (files && files.length > 0) {
+      const fakeEvent = { target: { files } } as unknown as Event;
+      this.onFileSelected(fakeEvent);
+    }
   }
 } 

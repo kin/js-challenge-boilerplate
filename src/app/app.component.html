@@ -1,7 +1,15 @@
-<h1>Hello, Kin OCR</h1>
+<div class="app-header">
+  <div class="app-header-content">
+    <h1>Kin OCR</h1>
+    <div class="subtitle">Advanced Policy Validation &amp; Processing</div>
+  </div>
+  <div class="header-accent"></div>
+</div>
 
-<app-file-upload (fileLoaded)="onFileLoaded($event)" [disabled]="tableData.length > 0"></app-file-upload>
-<button *ngIf="tableData.length > 0" (click)="reset()" style="margin-left: 1rem;">Reset</button>
+<div class="upload-row">
+  <app-file-upload (fileLoaded)="onFileLoaded($event)" [disabled]="tableData.length > 0"></app-file-upload>
+  <button *ngIf="tableData.length > 0" (click)="reset()" class="button-secondary">Reset</button>
+</div>
 
 <style>
   .responsive-flex {
