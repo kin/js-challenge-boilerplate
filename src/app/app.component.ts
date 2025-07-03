@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 export class AppComponent {
   title = 'kin-ocr';
   csvContent: string | null = null;
-  tableData: { id: number; policyNumber: string }[] = [];
+  tableData: { policyNumber: number; isValid: boolean }[] = [];
 
   constructor(private http: HttpClient) {
     // For debugging: load sample.csv on init
@@ -28,13 +28,25 @@ export class AppComponent {
     this.tableData = this.parseCsv(content);
   }
 
-  parseCsv(csv: string): { id: number; policyNumber: string }[] {
-    // Simple parser: split by comma, assign IDs
+  parseCsv(csv: string): { policyNumber: number; isValid: boolean }[] {
     return csv
       .split(',')
-      .map((policyNumber, idx) => ({
-        id: idx + 1,
-        policyNumber: policyNumber.trim()
-      }));
+      .map((policyNumber) => {
+        const trimmed = policyNumber.trim();
+        const num = Number(trimmed);
+        return {
+          policyNumber: num,
+          isValid: this.isValidPolicyNumber(trimmed)
+        };
+      });
+  }
+
+  isValidPolicyNumber(policy: string): boolean {
+    if (!/^\d{9}$/.test(policy)) return false; // Must be exactly 9 digits
+    let sum = 0;
+    for (let i = 0; i < 9; i++) {
+      sum += (i + 1) * Number(policy[8 - i]); // d1 is rightmost
+    }
+    return sum % 11 === 0;
   }
 }
