@@ -20,7 +20,11 @@
       <td>{{ i + 1 }}</td>
       <td>{{ row.policyNumber }}</td>
       <td>
-        <span [style.color]="!row.isValid ? 'red' : 'inherit'">{{ row.isValid ? 'VALID' : 'ERROR' }}</span>
+        <span [ngStyle]="{
+          color: row.result === 'INVALID' ? 'orange' : (row.result === 'ERROR' ? 'red' : 'inherit')
+        }">
+          {{ row.result }}
+        </span>
       </td>
     </tr>
   </tbody>

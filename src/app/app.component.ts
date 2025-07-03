@@ -4,6 +4,8 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
+export type PolicyResult = 'VALID' | 'ERROR' | 'INVALID';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -14,7 +16,7 @@ import { CommonModule } from '@angular/common';
 export class AppComponent {
   title = 'kin-ocr';
   csvContent: string | null = null;
-  tableData: { policyNumber: number; isValid: boolean }[] = [];
+  tableData: { policyNumber: string; result: PolicyResult }[] = [];
   postResult: { success: boolean; id?: number; error?: string } | null = null;
   isSubmitting = false;
 
@@ -31,21 +33,23 @@ export class AppComponent {
     this.postResult = null; // Reset result on new upload
   }
 
-  parseCsv(csv: string): { policyNumber: number; isValid: boolean }[] {
+  parseCsv(csv: string): { policyNumber: string; result: PolicyResult }[] {
     return csv
       .split(',')
       .map((policyNumber) => {
         const trimmed = policyNumber.trim();
-        const num = Number(trimmed);
+        if (!/^\d{9}$/.test(trimmed)) {
+          return { policyNumber: trimmed, result: 'INVALID' };
+        }
         return {
-          policyNumber: num,
-          isValid: this.isValidPolicyNumber(trimmed)
+          policyNumber: trimmed,
+          result: this.isValidPolicyNumber(trimmed) ? 'VALID' : 'ERROR'
         };
       });
   }
 
   isValidPolicyNumber(policy: string): boolean {
-    if (!/^\d{9}$/.test(policy)) return false; // Must be exactly 9 digits
+    // Assumes already checked for 9 digits
     let sum = 0;
     for (let i = 0; i < 9; i++) {
       sum += (i + 1) * Number(policy[8 - i]); // d1 is rightmost
@@ -53,10 +57,18 @@ export class AppComponent {
     return sum % 11 === 0;
   }
 
+  get hasValidPolicy(): boolean {
+    return this.tableData.some(row => row.result === 'VALID');
+  }
+
   submitPolicies() {
     this.isSubmitting = true;
     this.postResult = null;
-    this.http.post<{ id: number }>('https://jsonplaceholder.typicode.com/posts', this.tableData)
+    // Only submit valid and error policies (not invalid)
+    const payload = this.tableData
+      .filter(row => row.result === 'VALID' || row.result === 'ERROR')
+      .map(row => ({ policyNumber: row.policyNumber, isValid: row.result === 'VALID' }));
+    this.http.post<{ id: number }>('https://jsonplaceholder.typicode.com/posts', payload)
       .subscribe({
         next: (res) => {
           this.postResult = { success: true, id: res.id };
@@ -67,9 +79,5 @@ export class AppComponent {
           this.isSubmitting = false;
         }
       });
-  }
-
-  get hasValidPolicy(): boolean {
-    return this.tableData.some(row => row.isValid);
   }
 }
