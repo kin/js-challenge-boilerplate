@@ -3,41 +3,96 @@
 <app-file-upload (fileLoaded)="onFileLoaded($event)" [disabled]="tableData.length > 0"></app-file-upload>
 <button *ngIf="tableData.length > 0" (click)="reset()" style="margin-left: 1rem;">Reset</button>
 
-<table *ngIf="tableData.length > 0" border="1" cellpadding="8" style="margin-top: 2rem; min-width: 400px;">
-  <thead>
-    <tr>
-      <th (click)="setSort('id')" style="cursor:pointer;">ID
-        <span *ngIf="sortColumn === 'id'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-      </th>
-      <th (click)="setSort('policyNumber')" style="cursor:pointer;">Policy Number
-        <span *ngIf="sortColumn === 'policyNumber'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-      </th>
-      <th (click)="setSort('result')" style="cursor:pointer;">Result
-        <span *ngIf="sortColumn === 'result'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let row of sortedTableData">
-      <td>{{ row.id }}</td>
-      <td>
-        {{ row.policyNumber }}
-        <span *ngIf="row.isDuplicate" title="Duplicate" style="color: red;">🚩</span>
-      </td>
-      <td>
-        <span [ngStyle]="{
-          color: row.result === 'INVALID' ? 'orange' : (row.result === 'ERROR' ? 'red' : 'inherit')
-        }">
-          {{ row.result }}
-        </span>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<style>
+  .responsive-flex {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+  .file-details {
+    flex: 2;
+    order: 1;
+  }
+  .file-summary {
+    flex: 1;
+    min-width: 220px;
+    order: 2;
+  }
+  @media (max-width: 768px) {
+    .responsive-flex {
+      flex-direction: column;
+    }
+    .file-details {
+      order: 2;
+      min-width: 0 !important;
+      width: 100% !important;
+    }
+    .file-summary {
+      order: 1;
+      min-width: 0 !important;
+      width: 100% !important;
+    }
+  }
+</style>
 
-<div style="margin: 1rem 0 0.5rem 0;" *ngIf="hasDuplicatePolicy">
-  <span style="color: red; font-size: 1.2em;">🚩</span>
-  <span style="margin-left: 0.5em;">Duplicate policy number</span>
+<div class="responsive-flex">
+  <div class="file-details">
+    <ng-container *ngIf="tableData.length > 0">
+      <h2 style="margin-top: 2rem;">File Details</h2>
+      <table *ngIf="tableData.length > 0" border="1" cellpadding="8" style="margin-top: 0.5rem; min-width: 400px;">
+        <thead>
+          <tr>
+            <th (click)="setSort('id')" style="cursor:pointer;">ID
+              <span *ngIf="sortColumn === 'id'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="setSort('policyNumber')" style="cursor:pointer;">Policy Number
+              <span *ngIf="sortColumn === 'policyNumber'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="setSort('result')" style="cursor:pointer;">Result
+              <span *ngIf="sortColumn === 'result'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of sortedTableData">
+            <td>{{ row.id }}</td>
+            <td>
+              {{ row.policyNumber }}
+              <span *ngIf="row.isDuplicate" title="Duplicate" style="color: red;">🚩</span>
+            </td>
+            <td>
+              <span [ngStyle]="{
+                color: row.result === 'INVALID' ? 'orange' : (row.result === 'ERROR' ? 'red' : 'inherit')
+              }">
+                {{ row.result }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+    <div style="margin: 1rem 0 0.5rem 0;" *ngIf="hasDuplicatePolicy">
+      <span style="color: red; font-size: 1.2em;">🚩</span>
+      <span style="margin-left: 0.5em;">Duplicate policy number</span>
+    </div>
+  </div>
+  <div class="file-summary">
+    <ng-container *ngIf="tableData.length > 0">
+      <h2 style="margin-top: 2rem;">File Summary</h2>
+      <table *ngIf="tableData.length > 0" border="1" cellpadding="8" style="margin-top: 0.5rem; width: 100%;">
+        <thead>
+          <tr><th></th><th>Count</th><th>Percentage</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Total policy count</td><td>{{ totalPolicies }}</td><td>100%</td></tr>
+          <tr><td>Valid Policies</td><td>{{ totalValid }}</td><td>{{ (totalValid / totalPolicies * 100) | number:'1.1-1' }}%</td></tr>
+          <tr><td>Error Policies</td><td>{{ totalError }}</td><td>{{ (totalError / totalPolicies * 100) | number:'1.1-1' }}%</td></tr>
+          <tr><td>Invalid Policies</td><td>{{ totalInvalid }}</td><td>{{ (totalInvalid / totalPolicies * 100) | number:'1.1-1' }}%</td></tr>
+          <tr><td>Duplicate Policies</td><td>{{ totalDuplicates }}</td><td>{{ (totalDuplicates / totalPolicies * 100) | number:'1.1-1' }}%</td></tr>
+        </tbody>
+      </table>
+    </ng-container>
+  </div>
 </div>
 
 <button

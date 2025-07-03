@@ -125,4 +125,22 @@ export class AppComponent {
     this.sortColumn = 'id';
     this.sortDirection = 'asc';
   }
+
+  get totalPolicies() {
+    return this.tableData.length;
+  }
+  get totalValid() {
+    return this.tableData.filter(row => row.result === 'VALID').length;
+  }
+  get totalError() {
+    return this.tableData.filter(row => row.result === 'ERROR').length;
+  }
+  get totalInvalid() {
+    return this.tableData.filter(row => row.result === 'INVALID').length;
+  }
+  get totalDuplicates() {
+    // Count unique policy numbers that are duplicates
+    const dups = new Set(this.tableData.filter(row => row.isDuplicate).map(row => row.policyNumber));
+    return dups.size;
+  }
 }
