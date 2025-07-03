@@ -1,1 +1,23 @@
 <h1>Hello, Kin OCR</h1>
+
+<app-file-upload (fileLoaded)="onFileLoaded($event)"></app-file-upload>
+
+<div *ngIf="csvContent" style="margin-top: 1rem; color: #888;">
+  <strong>Raw CSV Content:</strong>
+  <pre>{{ csvContent }}</pre>
+</div>
+
+<table *ngIf="tableData.length > 0" border="1" cellpadding="8" style="margin-top: 2rem; min-width: 400px;">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Policy Number</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of tableData">
+      <td>{{ row.id }}</td>
+      <td>{{ row.policyNumber }}</td>
+    </tr>
+  </tbody>
+</table>
