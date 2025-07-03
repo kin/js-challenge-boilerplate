@@ -19,6 +19,8 @@ export class AppComponent {
   tableData: { policyNumber: string; result: PolicyResult; isDuplicate: boolean }[] = [];
   postResult: { success: boolean; id?: number; error?: string } | null = null;
   isSubmitting = false;
+  sortColumn = 'id';
+  sortDirection = 'asc';
 
   constructor(private http: HttpClient) {
     // For debugging: load sample.csv on init
@@ -89,5 +91,29 @@ export class AppComponent {
           this.isSubmitting = false;
         }
       });
+  }
+
+  get sortedTableData() {
+    const data = this.tableData.map((row, idx) => ({ ...row, id: idx + 1 }));
+    const dir = this.sortDirection === 'asc' ? 1 : -1;
+    return data.sort((a, b) => {
+      if (this.sortColumn === 'id') {
+        return dir * (a.id - b.id);
+      } else if (this.sortColumn === 'policyNumber') {
+        return dir * (a.policyNumber.localeCompare(b.policyNumber));
+      } else if (this.sortColumn === 'result') {
+        return dir * (a.result.localeCompare(b.result));
+      }
+      return 0;
+    });
+  }
+
+  setSort(column: 'id' | 'policyNumber' | 'result') {
+    if (this.sortColumn === column) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
   }
 }

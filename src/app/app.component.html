@@ -5,14 +5,20 @@
 <table *ngIf="tableData.length > 0" border="1" cellpadding="8" style="margin-top: 2rem; min-width: 400px;">
   <thead>
     <tr>
-      <th>ID</th>
-      <th>Policy Number</th>
-      <th>Result</th>
+      <th (click)="setSort('id')" style="cursor:pointer;">ID
+        <span *ngIf="sortColumn === 'id'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+      </th>
+      <th (click)="setSort('policyNumber')" style="cursor:pointer;">Policy Number
+        <span *ngIf="sortColumn === 'policyNumber'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+      </th>
+      <th (click)="setSort('result')" style="cursor:pointer;">Result
+        <span *ngIf="sortColumn === 'result'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+      </th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let row of tableData; let i = index">
-      <td>{{ i + 1 }}</td>
+    <tr *ngFor="let row of sortedTableData">
+      <td>{{ row.id }}</td>
       <td>
         {{ row.policyNumber }}
         <span *ngIf="row.isDuplicate" title="Duplicate" style="color: red;">🚩</span>
