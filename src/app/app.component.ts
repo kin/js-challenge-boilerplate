@@ -15,6 +15,8 @@ export class AppComponent {
   title = 'kin-ocr';
   csvContent: string | null = null;
   tableData: { policyNumber: number; isValid: boolean }[] = [];
+  postResult: { success: boolean; id?: number; error?: string } | null = null;
+  isSubmitting = false;
 
   constructor(private http: HttpClient) {
     // For debugging: load sample.csv on init
@@ -26,6 +28,7 @@ export class AppComponent {
   onFileLoaded(content: string) {
     this.csvContent = content;
     this.tableData = this.parseCsv(content);
+    this.postResult = null; // Reset result on new upload
   }
 
   parseCsv(csv: string): { policyNumber: number; isValid: boolean }[] {
@@ -48,5 +51,25 @@ export class AppComponent {
       sum += (i + 1) * Number(policy[8 - i]); // d1 is rightmost
     }
     return sum % 11 === 0;
+  }
+
+  submitPolicies() {
+    this.isSubmitting = true;
+    this.postResult = null;
+    this.http.post<{ id: number }>('https://jsonplaceholder.typicode.com/posts', this.tableData)
+      .subscribe({
+        next: (res) => {
+          this.postResult = { success: true, id: res.id };
+          this.isSubmitting = false;
+        },
+        error: (err) => {
+          this.postResult = { success: false, error: 'Failed to submit policies.' };
+          this.isSubmitting = false;
+        }
+      });
+  }
+
+  get hasValidPolicy(): boolean {
+    return this.tableData.some(row => row.isValid);
   }
 }

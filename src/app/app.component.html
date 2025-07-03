@@ -25,3 +25,22 @@
     </tr>
   </tbody>
 </table>
+
+<button
+  *ngIf="hasValidPolicy"
+  type="button"
+  (click)="submitPolicies()"
+  [disabled]="isSubmitting"
+  style="margin-top: 1rem;"
+>
+  {{ isSubmitting ? 'Submitting...' : 'Submit Policies' }}
+</button>
+
+<div *ngIf="postResult" style="margin-top: 1rem;">
+  <span *ngIf="postResult.success" style="color: green;">
+    Success! ID: {{ postResult.id }}
+  </span>
+  <span *ngIf="!postResult.success" style="color: red;">
+    {{ postResult.error }}
+  </span>
+</div>
