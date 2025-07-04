@@ -26,9 +26,7 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Hello, Kin OCR'
-    );
+    expect(compiled.querySelector('.kin-logo')?.textContent).toContain('kin');
   });
 
   it('should parse valid, error, and invalid policy numbers', () => {
