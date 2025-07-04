@@ -144,7 +144,7 @@
   *ngIf="hasValidPolicy"
   type="button"
   (click)="submitPolicies()"
-  [disabled]="isSubmitting"
+  [disabled]="isSubmitting || (postResult && postResult.success)"
   class="button-primary"
   style="margin-top: 1rem;"
 >
@@ -153,7 +153,7 @@
 
 <div *ngIf="postResult" style="margin-top: 1rem;">
   <span *ngIf="postResult.success" style="color: green;">
-    Success! ID: {{ postResult.id }}
+    Policy Submission Successful! ID: {{ postResult.id }}
   </span>
   <span *ngIf="!postResult.success" style="color: red;">
     {{ postResult.error }}
