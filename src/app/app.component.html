@@ -8,7 +8,7 @@
 
 <div class="upload-row">
   <app-file-upload (fileLoaded)="onFileLoaded($event)" [disabled]="tableData.length > 0"></app-file-upload>
-  <button *ngIf="tableData.length > 0" (click)="reset()" class="button-secondary">Reset</button>
+  <button *ngIf="tableData.length > 0" (click)="reset()" class="button-primary">Reset</button>
 </div>
 
 <style>
@@ -108,6 +108,7 @@
   type="button"
   (click)="submitPolicies()"
   [disabled]="isSubmitting"
+  class="button-primary"
   style="margin-top: 1rem;"
 >
   {{ isSubmitting ? 'Submitting...' : 'Submit Policies' }}

@@ -206,3 +206,29 @@ tbody td {
   color: #666;
   font-size: 0.95em;
 }
+
+.button-primary {
+  background: #ffd166;
+  color: #222;
+  font-weight: 700;
+  border: 2px solid #222;
+  border-radius: 0.6em;
+  padding: 0.7em 2em;
+  font-size: 1.08rem;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: border 0.18s, color 0.18s, box-shadow 0.18s, transform 0.18s;
+}
+.button-primary:hover:not(:disabled) {
+  background: #ffe29a;
+  border-color: #111;
+  color: #111;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 16px 0 rgba(0,0,0,0.12);
+}
+.button-primary:disabled {
+  color: #888;
+  border-color: #ccc;
+  background: #f7e6b3;
+  cursor: not-allowed;
+}
