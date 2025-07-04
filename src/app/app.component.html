@@ -47,7 +47,7 @@
   <div class="file-details">
     <ng-container *ngIf="tableData.length > 0">
       <h2 style="margin-top: 2rem;">File Details</h2>
-      <table data-testid="file-details-table" *ngIf="tableData.length > 0" border="1" cellpadding="8" style="margin-top: 0.5rem; min-width: 400px;">
+      <table data-testid="file-details-table" *ngIf="tableData.length > 0" style="margin-top: 0.5rem; min-width: 400px;">
         <thead>
           <tr>
             <th (click)="setSort('id')" style="cursor:pointer;">ID
@@ -87,7 +87,7 @@
   <div class="file-summary">
     <ng-container *ngIf="tableData.length > 0">
       <h2 style="margin-top: 2rem;">File Summary</h2>
-      <table *ngIf="tableData.length > 0" border="1" cellpadding="8" style="margin-top: 0.5rem; width: 100%;">
+      <table *ngIf="tableData.length > 0" style="margin-top: 0.5rem; width: 100%;">
         <thead>
           <tr><th></th><th>Count</th><th>Percentage</th></tr>
         </thead>

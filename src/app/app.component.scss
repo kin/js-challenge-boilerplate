@@ -126,3 +126,83 @@
     width: 100%;
   }
 }
+
+// Table Styles
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: var(--color-neutral-white);
+}
+
+thead {
+  background: #f5f5f5;
+}
+
+thead th {
+  background: #e8e8e8;
+  color: #333;
+  font-weight: 600;
+  padding: 1rem 0.75rem;
+  text-align: left;
+  border-bottom: 2px solid #d0d0d0;
+  transition: background-color 0.2s ease;
+}
+
+thead th:hover {
+  background: #d8d8d8;
+  cursor: pointer;
+}
+
+thead th:first-child {
+  border-top-left-radius: 0.5rem;
+}
+
+thead th:last-child {
+  border-top-right-radius: 0.5rem;
+}
+
+tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.2s ease;
+}
+
+tbody tr:hover {
+  background-color: #f8f8f8;
+}
+
+tbody tr:last-child {
+  border-bottom: none;
+}
+
+tbody td {
+  padding: 0.75rem;
+  color: #333;
+}
+
+// File Details table specific styles
+.file-details table {
+  border: 1px solid #d0d0d0;
+}
+
+// File Summary table specific styles  
+.file-summary table {
+  border: 1px solid #d0d0d0;
+}
+
+.file-summary tbody td:first-child {
+  font-weight: 500;
+  color: #555;
+}
+
+.file-summary tbody td:nth-child(2) {
+  font-weight: 600;
+  color: #333;
+}
+
+.file-summary tbody td:last-child {
+  color: #666;
+  font-size: 0.95em;
+}
