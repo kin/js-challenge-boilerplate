@@ -7,12 +7,16 @@
   </div>
 </div>
 
-<div class="upload-row">
-  <app-file-upload (fileLoaded)="onFileLoaded($event)" [disabled]="tableData.length > 0"></app-file-upload>
-  <button *ngIf="tableData.length > 0" (click)="reset()" class="button-primary">Reset</button>
-</div>
+<div class="main-container">
+  <div class="upload-row">
+    <app-file-upload (fileLoaded)="onFileLoaded($event)" [disabled]="tableData.length > 0"></app-file-upload>
+    <button *ngIf="tableData.length > 0" (click)="reset()" class="button-primary">Reset</button>
+  </div>
 
 <style>
+  .main-container {
+    padding: 0 60px 60px 60px;
+  }
   .responsive-flex {
     display: flex;
     gap: 2rem;
@@ -28,6 +32,9 @@
     order: 2;
   }
   @media (max-width: 768px) {
+    .main-container {
+      padding: 0 20px 60px 20px;
+    }
     .responsive-flex {
       flex-direction: column;
     }
@@ -151,4 +158,5 @@
   <span *ngIf="!postResult.success" style="color: red;">
     {{ postResult.error }}
   </span>
+</div>
 </div>
