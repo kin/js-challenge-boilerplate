@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { HttpClient } from '@angular/common/http';
@@ -15,6 +15,7 @@ export type PolicyResult = 'VALID' | 'ERROR' | 'INVALID';
 })
 export class AppComponent {
   title = 'kin-ocr';
+  @ViewChild(FileUploadComponent) fileUploadComponent!: FileUploadComponent;
   csvContent: string | null = null;
   tableData: { policyNumber: string; result: PolicyResult; isDuplicate: boolean }[] = [];
   postResult: { success: boolean; id?: number; error?: string } | null = null;
@@ -124,6 +125,10 @@ export class AppComponent {
     this.isSubmitting = false;
     this.sortColumn = 'id';
     this.sortDirection = 'asc';
+    // Clear the file input to allow re-uploading the same file
+    if (this.fileUploadComponent) {
+      this.fileUploadComponent.clearFileInput();
+    }
   }
 
   get totalPolicies() {

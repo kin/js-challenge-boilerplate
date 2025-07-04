@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Output, Input, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -26,6 +26,7 @@ import { CommonModule } from '@angular/common';
 export class FileUploadComponent {
   @Output() fileLoaded = new EventEmitter<string>();
   @Input() disabled = false;
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   errorMessage: string | null = null;
   isDragOver = false;
 
@@ -51,6 +52,13 @@ export class FileUploadComponent {
       this.fileLoaded.emit(reader.result as string);
     };
     reader.readAsText(file);
+  }
+
+  clearFileInput(): void {
+    if (this.fileInput && this.fileInput.nativeElement) {
+      this.fileInput.nativeElement.value = '';
+    }
+    this.errorMessage = null;
   }
 
   onDragOver(event: DragEvent) {
