@@ -3,13 +3,14 @@ import { RouterOutlet } from '@angular/router';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 export type PolicyResult = 'VALID' | 'ERROR' | 'INVALID';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FileUploadComponent],
+  imports: [CommonModule, RouterOutlet, FileUploadComponent, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -22,6 +23,7 @@ export class AppComponent {
   isSubmitting = false;
   sortColumn = 'id';
   sortDirection = 'asc';
+  searchTerm: string = '';
 
   constructor(private http: HttpClient) {
     // For debugging: load sample.csv on init
@@ -109,6 +111,94 @@ export class AppComponent {
     });
   }
 
+  get filteredTableData() {
+    if (!this.searchTerm.trim()) {
+      return this.sortedTableData;
+    }
+    return this.sortedTableData.filter(row => 
+      row.policyNumber.includes(this.searchTerm.trim())
+    );
+  }
+
+  get hasSearchResults(): boolean {
+    return this.filteredTableData.length > 0;
+  }
+
+  get filteredValidCount(): number {
+    return this.filteredTableData.filter(row => row.result === 'VALID').length;
+  }
+
+  get filteredErrorCount(): number {
+    return this.filteredTableData.filter(row => row.result === 'ERROR').length;
+  }
+
+  get filteredInvalidCount(): number {
+    return this.filteredTableData.filter(row => row.result === 'INVALID').length;
+  }
+
+  get filteredDuplicateCount(): number {
+    return new Set(this.filteredTableData.filter(row => row.isDuplicate).map(row => row.policyNumber)).size;
+  }
+
+  get displayTotalCount(): number {
+    return this.searchTerm ? this.filteredTableData.length : this.totalPolicies;
+  }
+
+  get displayTotalPercentage(): string {
+    if (this.searchTerm) {
+      return ((this.filteredTableData.length / this.totalPolicies) * 100).toFixed(1);
+    }
+    return '100.0';
+  }
+
+  get displayValidCount(): number {
+    return this.searchTerm ? this.filteredValidCount : this.totalValid;
+  }
+
+  get displayValidPercentage(): string {
+    if (this.searchTerm) {
+      return this.filteredTableData.length > 0 ? ((this.filteredValidCount / this.filteredTableData.length) * 100).toFixed(1) : '0.0';
+    }
+    return ((this.totalValid / this.totalPolicies) * 100).toFixed(1);
+  }
+
+  get displayErrorCount(): number {
+    return this.searchTerm ? this.filteredErrorCount : this.totalError;
+  }
+
+  get displayErrorPercentage(): string {
+    if (this.searchTerm) {
+      return this.filteredTableData.length > 0 ? ((this.filteredErrorCount / this.filteredTableData.length) * 100).toFixed(1) : '0.0';
+    }
+    return ((this.totalError / this.totalPolicies) * 100).toFixed(1);
+  }
+
+  get displayInvalidCount(): number {
+    return this.searchTerm ? this.filteredInvalidCount : this.totalInvalid;
+  }
+
+  get displayInvalidPercentage(): string {
+    if (this.searchTerm) {
+      return this.filteredTableData.length > 0 ? ((this.filteredInvalidCount / this.filteredTableData.length) * 100).toFixed(1) : '0.0';
+    }
+    return ((this.totalInvalid / this.totalPolicies) * 100).toFixed(1);
+  }
+
+  get displayDuplicateCount(): number {
+    return this.searchTerm ? this.filteredDuplicateCount : this.totalDuplicates;
+  }
+
+  get displayDuplicatePercentage(): string {
+    if (this.searchTerm) {
+      return this.filteredTableData.length > 0 ? ((this.filteredDuplicateCount / this.filteredTableData.length) * 100).toFixed(1) : '0.0';
+    }
+    return ((this.totalDuplicates / this.totalPolicies) * 100).toFixed(1);
+  }
+
+  clearSearch(): void {
+    this.searchTerm = '';
+  }
+
   setSort(column: 'id' | 'policyNumber' | 'result') {
     if (this.sortColumn === column) {
       this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
@@ -125,6 +215,7 @@ export class AppComponent {
     this.isSubmitting = false;
     this.sortColumn = 'id';
     this.sortDirection = 'asc';
+    this.searchTerm = '';
     // Clear the file input to allow re-uploading the same file
     if (this.fileUploadComponent) {
       this.fileUploadComponent.clearFileInput();

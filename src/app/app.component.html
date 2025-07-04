@@ -48,6 +48,29 @@
   <div class="file-details">
     <ng-container *ngIf="tableData.length > 0">
       <h2 style="margin-top: 2rem;">File Details</h2>
+      
+      <!-- Search Section -->
+      <div style="margin: 1rem 0; display: flex; gap: 0.5rem; align-items: center;">
+        <input 
+          type="text" 
+          [(ngModel)]="searchTerm" 
+          placeholder="Search for policy number..." 
+          style="flex: 1; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem;"
+        />
+        <button 
+          *ngIf="searchTerm" 
+          (click)="clearSearch()" 
+          style="padding: 0.5rem 1rem; background: #f0f0f0; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;"
+        >
+          Clear
+        </button>
+      </div>
+
+      <!-- No Results Message -->
+      <div *ngIf="searchTerm && !hasSearchResults" style="margin: 1rem 0; padding: 1rem; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; text-align: center; color: #6c757d;">
+        No policy number found matching "{{ searchTerm }}"
+      </div>
+
       <table data-testid="file-details-table" *ngIf="tableData.length > 0" style="margin-top: 0.5rem; min-width: 400px;">
         <thead>
           <tr>
@@ -63,7 +86,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let row of sortedTableData">
+          <tr *ngFor="let row of filteredTableData">
             <td>{{ row.id }}</td>
             <td>
               {{ row.policyNumber }}
@@ -88,16 +111,22 @@
   <div class="file-summary">
     <ng-container *ngIf="tableData.length > 0">
       <h2 style="margin-top: 2rem;">File Summary</h2>
+      
+      <!-- Search Status -->
+      <div *ngIf="searchTerm" style="margin: 0.5rem 0; padding: 0.5rem; background: #e3f2fd; border: 1px solid #2196f3; border-radius: 4px; font-size: 0.9rem; color: #1976d2;">
+        Showing {{ filteredTableData.length }} of {{ totalPolicies }} policies matching "{{ searchTerm }}"
+      </div>
+      
       <table *ngIf="tableData.length > 0" style="margin-top: 0.5rem; width: 100%;">
         <thead>
           <tr><th></th><th>Count</th><th>Percentage</th></tr>
         </thead>
         <tbody>
-          <tr><td>Total policy count</td><td>{{ totalPolicies }}</td><td>100%</td></tr>
-          <tr><td>Valid Policies</td><td>{{ totalValid }}</td><td>{{ (totalValid / totalPolicies * 100) | number:'1.1-1' }}%</td></tr>
-          <tr><td>Error Policies</td><td>{{ totalError }}</td><td>{{ (totalError / totalPolicies * 100) | number:'1.1-1' }}%</td></tr>
-          <tr><td>Invalid Policies</td><td>{{ totalInvalid }}</td><td>{{ (totalInvalid / totalPolicies * 100) | number:'1.1-1' }}%</td></tr>
-          <tr><td>Duplicate Policies</td><td>{{ totalDuplicates }}</td><td>{{ (totalDuplicates / totalPolicies * 100) | number:'1.1-1' }}%</td></tr>
+          <tr><td>Total policy count</td><td>{{ displayTotalCount }}</td><td>{{ displayTotalPercentage }}%</td></tr>
+          <tr><td>Valid Policies</td><td>{{ displayValidCount }}</td><td>{{ displayValidPercentage }}%</td></tr>
+          <tr><td>Error Policies</td><td>{{ displayErrorCount }}</td><td>{{ displayErrorPercentage }}%</td></tr>
+          <tr><td>Invalid Policies</td><td>{{ displayInvalidCount }}</td><td>{{ displayInvalidPercentage }}%</td></tr>
+          <tr><td>Duplicate Policies</td><td>{{ displayDuplicateCount }}</td><td>{{ displayDuplicatePercentage }}%</td></tr>
         </tbody>
       </table>
     </ng-container>
