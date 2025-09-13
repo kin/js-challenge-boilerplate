@@ -1,0 +1,127 @@
+
+
+.upload-csv {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+  justify-content: center;
+    align-items: center;
+}
+
+.upload-csv__main {
+  width: 80%;   // x-axis padding for large screens
+}
+
+@media (max-width: 768px) {
+  .upload-csv__main {
+    width: 95%;   // x-axis padding for mobile/small screens
+  }
+}
+
+// HEADER STYLING===========================================
+// =========================================================
+
+.upload-csv__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center ;
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  svg {
+    height: 32px;
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-size: 28px;
+  }
+
+  div {
+    display: flex;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .upload-csv__header {
+    flex-direction: column; 
+    align-items: start;  // x-axis padding for mobile/small screens
+  }
+}
+
+
+// BUTTON STYLING----------
+.upload-csv__input-hidden { //choose file: secondary button styling
+  display: none;
+}
+
+.upload-csv__label {
+ 
+ font-weight: bold;
+  padding: 12px 16px;
+  border-radius: 0.25rem;
+  cursor: pointer;
+border: 2px solid var(--color-neutral-black); 
+
+  &:hover {
+    background-color: var(--color-secondary-100)
+  }
+}
+
+// TABLE STYLING===================================
+// ================================================
+
+
+.upload-csv__table__wrapper {
+border: 1px solid var(--color-neutral-800); 
+border-radius: 5px;
+overflow: hidden;
+  margin-top: 2rem;
+}
+
+.upload-csv__table {
+
+  width: 100%;
+  border-collapse: collapse;
+  
+  font-size: 1rem;
+  
+.upload-csv__table__header {
+  background-color: var(--color-primary-200);
+
+  &:hover {
+    background-color: var(--color-primary-200);
+  }
+}
+
+tr:hover {
+  background-color: var(--color-neutral-300);
+}
+
+
+  th, td {
+   
+    padding: 12px;
+    text-align: left;
+  }
+
+  th {
+    font-weight: bold;
+border-bottom: 1px solid var(--color-neutral-800); 
+
+  }
+
+  tr:nth-child(even) {
+    background-color: var(--color-neutral-200);
+  }
+
+   tr:nth-child(even):hover {
+    background-color: var(--color-neutral-300);
+  }
+}
+
