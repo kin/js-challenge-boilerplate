@@ -56,6 +56,20 @@
 
 
 // BUTTON STYLING----------
+
+.upload-csv__button {
+  position: relative;
+}
+
+.upload-csv__messages {
+  position: absolute;
+  top: 100%;                
+  right: 0;                  
+  width: max-content;       
+      
+ 
+}
+
 .upload-csv__input-hidden { //choose file: secondary button styling
   display: none;
 }
@@ -66,7 +80,8 @@
   padding: 12px 16px;
   border-radius: 0.25rem;
   cursor: pointer;
-border: 2px solid var(--color-neutral-black); 
+ border: 2px solid var(--color-neutral-black); 
+
 
   &:hover {
     background-color: var(--color-secondary-100)
@@ -81,7 +96,7 @@ border: 2px solid var(--color-neutral-black);
 border: 1px solid var(--color-neutral-800); 
 border-radius: 5px;
 overflow: hidden;
-  margin-top: 2rem;
+  margin-top: 2.5rem;
 }
 
 .upload-csv__table {
@@ -112,8 +127,10 @@ tr:hover {
 
   th {
     font-weight: bold;
-border-bottom: 1px solid var(--color-neutral-800); 
+  }
 
+  tbody {
+    border-top: 1px solid var(--color-neutral-800); 
   }
 
   tr:nth-child(even) {

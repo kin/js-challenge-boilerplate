@@ -18,8 +18,8 @@
         </svg>
         <h2 class="upload-csv__title">OCR</h2>
       </div>
-      <!-- BUTTONS--- -->
-      <div>
+      <!-- BUTTONS AND MESSAGES--- -->
+      <div class="upload-csv__button">
         <label for="csvFile" class="upload-csv__label">Choose file</label>
         <input
           id="csvFile"
@@ -27,7 +27,14 @@
           accept=".csv"
           class="upload-csv__input-hidden"
           aria-describedby="fileHelp"
+          (change)="onFileSelected($event)"
         />
+        <div class="upload-csv__messages" aria-live="polite">
+          <p class="upload-csv__error" *ngIf="error">{{ error }}</p>
+          <p class="upload-csv__staged" *ngIf="selectedFile">
+            Selected: {{ selectedFile.name }} ({{ selectedFile.size }} bytes)
+          </p>
+        </div>
       </div>
     </div>
     <!-- TABLE========================= -->
@@ -40,13 +47,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>123456789</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>987654321</td>
+          <tr *ngFor="let policy of policyNumbers; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ policy }}</td>
           </tr>
         </tbody>
       </table>
