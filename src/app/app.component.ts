@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.scss',
-    standalone: true
+  selector: 'app-root',
+  standalone: true,
+  styleUrl: './app.component.scss',
+  templateUrl: './app.component.html',
 })
 export class AppComponent {
-  title = 'kin-ocr';
+  public title = 'kin-ocr'
 }

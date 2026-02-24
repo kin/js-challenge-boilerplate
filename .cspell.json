@@ -1,0 +1,42 @@
+{
+  "version": "0.2",
+  "gitignoreRoot": ".",
+  "useGitignore": true,
+  "dictionaries": [
+    "en_US",
+    "npm",
+    "typescript",
+    "html",
+    "node",
+    "css",
+    "html",
+    "fonts",
+    "typescript",
+    "softwareTerms",
+    "companies",
+    "lorem-ipsum",
+    "project-words"
+  ],
+  "dictionaryDefinitions": [
+    {
+      "name": "project-words",
+      "path": "./.cspell-project-words.txt",
+      "noSuggest": true
+    }
+  ],
+  "ignorePaths": [
+    // Ignore specific files and directories
+    "**/dist/**",
+    "**/node_modules/**",
+    "**/output/**",
+    "**/test/**/*.factory.*",
+    "**/test/**/*.faker.*",
+    "**/test/**/*.fixture.*",
+    "src/assets/i18n/**",
+    ".*",
+    "package-lock.json",
+    "package.json",
+    "project-words.txt"
+  ],
+  "ignoreRegExpList": ["Email", "Urls", "#[\\w-]*"]
+}
