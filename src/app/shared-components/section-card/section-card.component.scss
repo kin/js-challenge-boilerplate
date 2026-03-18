@@ -1,0 +1,12 @@
+.section-card {
+  background: var(--color-neutral-white);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 600px) {
+  .section-card {
+    padding: 1.25rem;
+  }
+}

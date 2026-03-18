@@ -1,0 +1,45 @@
+<div
+  class="drop-zone"
+  [class.drop-zone--dragging]="isDragging"
+  [class.drop-zone--loaded]="hasFile"
+  role="button"
+  tabindex="0"
+  aria-label="Upload CSV file. Press Enter or Space to browse."
+  aria-describedby="upload-constraints"
+  (click)="openFilePicker()"
+  (keydown.enter)="openFilePicker()"
+  (keydown.space)="openFilePicker()"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)"
+>
+  @if (isLoading) {
+    <app-spinner />
+  } @else if (hasFile) {
+    <app-icon name="success" />
+  } @else {
+    <app-icon name="upload" />
+  }
+
+  <span class="drop-zone__primary-text">
+    @if (hasFile) {
+      {{ fileName }}
+    } @else {
+      <span>Drop your file here or <span class="drop-zone__link">browse</span></span>
+    }
+  </span>
+
+  @if (!hasFile && !isLoading) {
+    <span id="upload-constraints" class="drop-zone__hint">CSV only · Max 2 MB</span>
+  }
+</div>
+
+<input
+  #fileInput
+  type="file"
+  accept=".csv"
+  class="visually-hidden"
+  aria-hidden="true"
+  tabindex="-1"
+  (change)="onFileSelected($event)"
+/>

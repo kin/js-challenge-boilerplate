@@ -1,0 +1,34 @@
+:host {
+  display: inline-block;
+}
+
+.btn {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  padding: 0.55rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  border: 2px solid transparent;
+
+  &--outline {
+    background: transparent;
+    border-color: var(--color-secondary-400);
+    color: var(--color-secondary-400);
+
+    &:hover,
+    &:focus-visible {
+      background: var(--color-secondary-100);
+    }
+  }
+
+  &--primary {
+    background: var(--color-secondary-400);
+    color: var(--color-neutral-white);
+
+    &:hover,
+    &:focus-visible {
+      background: var(--color-secondary-500);
+    }
+  }
+}

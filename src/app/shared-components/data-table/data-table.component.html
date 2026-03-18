@@ -1,0 +1,18 @@
+<div class="table-wrapper" role="region" aria-label="Data table" tabindex="0">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">{{ indexHeader }}</th>
+        <th scope="col">{{ valueHeader }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of rows; track row + '_' + $index; let i = $index) {
+        <tr>
+          <td class="row-index">{{ i + 1 }}</td>
+          <td class="value-cell">{{ row }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

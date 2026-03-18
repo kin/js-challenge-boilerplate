@@ -1,0 +1,15 @@
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  margin-top: 1rem;
+
+  &--error {
+    background: var(--color-warning-100);
+    border: 1px solid var(--color-warning-200);
+    color: var(--color-warning-600);
+  }
+}

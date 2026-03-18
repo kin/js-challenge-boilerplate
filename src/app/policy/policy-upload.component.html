@@ -1,0 +1,36 @@
+<app-section-card ariaLabelledBy="upload-heading">
+  <app-section-heading headingId="upload-heading">Upload Policy CSV</app-section-heading>
+  <p class="section-description">
+    Select or drag in the CSV file produced by the document scanner. Only
+    <strong>.csv</strong> files up to <strong>2 MB</strong> are accepted.
+  </p>
+
+  <!-- Drop Zone -->
+  <app-file-upload
+    [isLoading]="isLoading"
+    [fileName]="fileName"
+    [hasFile]="policyNumbers.length > 0"
+    (fileSelected)="handleFile($event)"
+  />
+
+  @if (errorMessage) {
+    <app-alert [message]="errorMessage" />
+  }
+
+  @if (policyNumbers.length > 0) {
+    <div class="upload-actions">
+      <app-button variant="outline" (clicked)="clearFile()">Upload a different file</app-button>
+    </div>
+  }
+</app-section-card>
+
+@if (policyNumbers.length > 0) {
+  <app-section-card ariaLabelledBy="results-heading">
+    <div class="results-header">
+      <app-section-heading headingId="results-heading">Policy Numbers</app-section-heading>
+      <app-badge [count]="policyNumbers.length" [ariaLabel]="policyNumbers.length + ' policies found'" />
+    </div>
+    <app-data-table [rows]="policyNumbers" indexHeader="#" valueHeader="Policy Number" />
+  </app-section-card>
+}
+
