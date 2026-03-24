@@ -1,0 +1,33 @@
+.table-empty-state {
+  background: var(--color-secondary-200);
+  border-radius: 20px;
+  margin-top: 64px;
+  width: 100%;
+  height: 440px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.table-empty-state__description {
+  color: var(--color-neutral-600);
+  font-size: 12px;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.table-empty-state__icon {
+  font-weight: 900;
+  color: var(--color-secondary);
+  background: var(--color-secondary-100);
+  font-size: 48px;
+  height: 58px;
+  width: 58px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}

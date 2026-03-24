@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { TableEmptyStateComponent } from '../table-empty-state/table-empty-state.component';
 
 interface Policy {
   policyNumber: number;
@@ -12,7 +13,7 @@ interface Policy {
   templateUrl: './policy-table.component.html',
   styleUrl: './policy-table.component.scss',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TableEmptyStateComponent],
 })
 export class PolicyTableComponent implements OnChanges {
   @Input() policies: string[] = [];
