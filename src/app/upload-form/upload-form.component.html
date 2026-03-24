@@ -1,0 +1,18 @@
+<section>
+  <form (ngSubmit)="onSubmit()">
+    <div class="upload-form__field-container">
+      <label for="fileUpload">OCR File Upload</label>
+      <input
+        id="fileUpload"
+        type="file"
+        accept=".csv"
+        (change)="onFileSelected($event)"
+      />
+    </div>
+    @if (selectedFile) {
+      <p>Selected: {{ selectedFile.name }}</p>
+    } @else if (errorMessage) {
+      <p class="error">{{ errorMessage }}</p>
+    }
+  </form>
+</section>

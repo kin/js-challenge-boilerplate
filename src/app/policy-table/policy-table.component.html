@@ -1,0 +1,20 @@
+@if (!policies.length) {
+  <p>No policies found, please upload a CSV file.</p>
+} @else {
+  <table class="policy-table">
+    <thead>
+      <tr>
+        <th><!-- intentionally left blank --></th>
+        <th>Policy number</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (policy of policies; track policy; let index = $index) {
+        <tr>
+          <td class="policy-table__count-cell">{{ index + 1 }}</td>
+          <td>{{ policy }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}

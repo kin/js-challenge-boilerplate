@@ -1,0 +1,21 @@
+.policy-table {
+  width: 100%;
+  font-size: 20px;
+  border-collapse: collapse;
+  table-layout: auto;
+
+  thead th {
+    text-align: left;
+    border-bottom: 2px solid var(--color-neutral-400);
+  }
+
+  th,
+  td {
+    padding: 8px; /* Adds 8px of space inside cells */
+  }
+}
+
+.policy-table__count-cell {
+  width: 50px;
+  text-align: center;
+}
