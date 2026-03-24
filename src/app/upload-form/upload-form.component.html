@@ -3,15 +3,14 @@
     <div class="upload-form__field-container">
       <label for="fileUpload">OCR File Upload</label>
       <input
+        class="upload-form__file-input"
         id="fileUpload"
         type="file"
         accept=".csv"
         (change)="onFileSelected($event)"
       />
     </div>
-    @if (selectedFile) {
-      <p>Selected: {{ selectedFile.name }}</p>
-    } @else if (errorMessage) {
+    @if (errorMessage) {
       <p class="error">{{ errorMessage }}</p>
     }
   </form>

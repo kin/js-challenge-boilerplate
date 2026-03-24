@@ -2,3 +2,17 @@
   display: flex;
   flex-direction: column;
 }
+
+.upload-form__file-input {
+  margin-top: 12px;
+}
+
+.upload-form__file-input::file-selector-button {
+  background: var(--color-primary);
+  color: var(--color-neutral-black);
+  border: 2px solid var(--color-neutral-black);
+  font-weight: bold;
+  padding: 12px;
+  border-radius: 4px;
+  margin-right: 16px;
+}
