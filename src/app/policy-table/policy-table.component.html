@@ -19,4 +19,18 @@
       }
     </tbody>
   </table>
+
+  <button
+    class="policy-table__submit-button"
+    (click)="submitPolicies()"
+    [disabled]="submissionStatus === 'loading'"
+  >
+    {{ submissionStatus === "loading" ? "Submitting..." : "Submit Policies" }}
+  </button>
+
+  @if (submissionStatus === "success") {
+    <p>Success! Submission ID: {{ submissionId }}</p>
+  } @else if (submissionStatus === "error") {
+    <p>Submission failed. Please try again.</p>
+  }
 }

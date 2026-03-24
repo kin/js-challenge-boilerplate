@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 interface Policy {
   policyNumber: number;
@@ -17,12 +18,36 @@ export class PolicyTableComponent implements OnChanges {
   @Input() policies: string[] = [];
 
   processedPolicies: Policy[] = [];
+  submissionStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
+  submissionId: number | null = null;
 
+  constructor(private http: HttpClient) {}
+
+  /* Reset state when Input changes */
   ngOnChanges(): void {
     this.processedPolicies = this.policies.map((p) => ({
       policyNumber: parseInt(p, 10),
       isValid: this.isValid(p),
     }));
+    this.submissionStatus = 'idle';
+    this.submissionId = null;
+  }
+
+  submitPolicies(): void {
+    this.submissionStatus = 'loading';
+    this.http
+      .post<{
+        id: number;
+      }>('https://jsonplaceholder.typicode.com/posts', this.processedPolicies)
+      .subscribe({
+        next: (response) => {
+          this.submissionStatus = 'success';
+          this.submissionId = response.id;
+        },
+        error: () => {
+          this.submissionStatus = 'error';
+        },
+      });
   }
 
   private isValid(policy: string): boolean {
