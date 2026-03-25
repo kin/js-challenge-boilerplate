@@ -40,6 +40,12 @@ export class UploadFormComponent {
     }
   }
 
+  /**
+   * Processes the selected file, checking its size and type.
+   * If valid, it sets the selected file and parses the CSV.
+   * Otherwise, it sets an appropriate error message.
+   * @param file The file to process.
+   */
   private processFile(file: File): void {
     if (file.size <= MAX_FILE_SIZE && file.type === 'text/csv') {
       this.selectedFile = file;
@@ -54,7 +60,10 @@ export class UploadFormComponent {
     }
   }
 
-  // Parse the CSV into an array we can use for display
+  /**
+   * Parses the CSV file into an array of strings.
+   * @param file The CSV file to parse.
+   */
   private parseCSV(file: File): void {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -68,8 +77,7 @@ export class UploadFormComponent {
     reader.readAsText(file);
   }
 
-  // For the purpose of this challenge, we will just log the file name on submit.
-  // In a real app, this would likely trigger an upload to a server or some other processing.
+  /* Placeholder for form submission logic, currently just logs the selected file name. */
   onSubmit(): void {
     if (this.selectedFile) {
       console.log('Uploading file:', this.selectedFile.name);

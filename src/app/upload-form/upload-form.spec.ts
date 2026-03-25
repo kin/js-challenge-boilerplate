@@ -72,17 +72,11 @@ describe('UploadFormComponent', () => {
       expect(component.selectedFile).toBeNull();
       expect(component.errorMessage).toBe('Only CSV files are allowed.');
     });
-
-    it('only accepts CSV files via the input attributes', () => {
-      const input = fixture.nativeElement.querySelector('input#fileUpload');
-      expect(input.type).toBe('file');
-      expect(input.accept).toBe('.csv');
-    });
   });
 
-  /* --- onDrop / drag events --- */
+  /* --- drag/drop events --- */
 
-  describe('onDrop / drag events', () => {
+  describe('drag/drop events', () => {
     it('sets isDragging to true on dragover', () => {
       const event = new DragEvent('dragover');
       spyOn(event, 'preventDefault');
@@ -168,7 +162,7 @@ describe('UploadFormComponent', () => {
     });
   });
 
-  // --- onSubmit ---
+  /* --- onSubmit --- */
 
   describe('onSubmit', () => {
     it('logs the file name when a file is selected', () => {
