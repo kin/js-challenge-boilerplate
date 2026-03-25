@@ -1,40 +1,50 @@
 @if (!processedPolicies.length) {
   <table-empty-state />
 } @else {
-  <table class="policy-table">
-    <thead>
-      <tr>
-        <th><!-- intentionally left blank --></th>
-        <th>Policy #</th>
-        <th>Result</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (policy of processedPolicies; track policy; let index = $index) {
+  <div class="policy-table__container">
+    <table class="policy-table">
+      <thead>
         <tr>
-          <td class="policy-table__count-cell">{{ index + 1 }}</td>
-          <td>{{ policy.policyNumber }}</td>
-          <td>
-            {{ policy.isValid ? "valid" : "error" }}
-          </td>
+          <th><!-- intentionally left blank --></th>
+          <th>Policy #</th>
+          <th>Result</th>
         </tr>
+      </thead>
+      <tbody>
+        @for (policy of processedPolicies; track policy; let index = $index) {
+          <tr>
+            <td class="policy-table__count-cell">{{ index + 1 }}</td>
+            <td>{{ policy.policyNumber }}</td>
+            <td>
+              {{ policy.isValid ? "valid" : "error" }}
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <button
+      class="policy-table__submit-button"
+      (click)="submitPolicies()"
+      [disabled]="
+        submissionStatus === 'loading' || submissionStatus === 'success'
+      "
+    >
+      @if (submissionStatus === "success") {
+        Submission Successful
+      } @else if (submissionStatus === "error") {
+        Retry Submission
+      } @else if (submissionStatus === "loading") {
+        Submitting...
+      } @else {
+        Submit Policy Numbers
       }
-    </tbody>
-  </table>
+    </button>
 
-  <button
-    class="policy-table__submit-button"
-    (click)="submitPolicies()"
-    [disabled]="
-      submissionStatus === 'loading' || submissionStatus === 'success'
-    "
-  >
-    Submit Policy Numbers
-  </button>
-
-  @if (submissionStatus === "success") {
-    <p>Success! Submission ID: {{ submissionId }}</p>
-  } @else if (submissionStatus === "error") {
-    <p>Submission failed. Please try again.</p>
-  }
+    @if (submissionStatus === "success") {
+      <p>Success! Submission ID: {{ submissionId }}</p>
+    } @else if (submissionStatus === "error") {
+      <p>Submission failed. Please try again.</p>
+    }
+  </div>
 }

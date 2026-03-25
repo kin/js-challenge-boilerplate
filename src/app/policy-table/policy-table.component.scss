@@ -1,3 +1,16 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.policy-table__container {
+  animation: fadeIn 0.4s ease-out;
+}
+
 .policy-table {
   width: 100%;
   font-size: 20px;
@@ -39,6 +52,7 @@
   border-radius: 4px;
   margin-top: 32px;
   cursor: pointer;
+  transition: background-color 0.125s ease-in-out;
   &:disabled {
     cursor: not-allowed;
     background: var(--color-primary-200);

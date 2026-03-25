@@ -11,21 +11,46 @@ const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB (1 MB = 1024 * 1024 bytes)
 export class UploadFormComponent {
   selectedFile: File | null = null;
   errorMessage: string | null = null;
+  isDragging = false;
 
   @Output() csvParsed = new EventEmitter<string[]>();
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    this.isDragging = true;
+  }
+
+  onDragLeave(): void {
+    this.isDragging = false;
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    this.isDragging = false;
+    const file = event.dataTransfer?.files[0];
+    if (file) {
+      this.processFile(file);
+    }
+  }
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-      if (file.size <= MAX_FILE_SIZE) {
-        this.selectedFile = file;
-        this.errorMessage = null;
-        this.parseCSV(file);
-      } else {
-        this.selectedFile = null;
-        this.errorMessage = 'File size exceeds the limit of 2 MB.';
-      }
+      this.processFile(input.files[0]);
+    }
+  }
+
+  private processFile(file: File): void {
+    if (file.size <= MAX_FILE_SIZE && file.type === 'text/csv') {
+      this.selectedFile = file;
+      this.errorMessage = null;
+      this.parseCSV(file);
+    } else {
+      this.selectedFile = null;
+      this.errorMessage =
+        file.type === 'text/csv'
+          ? 'File size exceeds the limit of 2 MB.'
+          : 'Only CSV files are allowed.';
     }
   }
 

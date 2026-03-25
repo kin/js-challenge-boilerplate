@@ -2,16 +2,33 @@
   <form (ngSubmit)="onSubmit()">
     <div class="upload-form__field-container">
       <label class="upload-form__label" for="fileUpload">OCR File Upload</label>
-      <input
-        class="upload-form__file-input"
-        id="fileUpload"
-        type="file"
-        accept=".csv"
-        (change)="onFileSelected($event)"
-      />
+      <p class="upload-form__helper-text">
+        Max size, 2MB. Only CSV is accepted.
+      </p>
+      <div
+        class="upload-form__drop-zone"
+        [class.upload-form__drop-zone--active]="isDragging"
+        (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave()"
+        (drop)="onDrop($event)"
+      >
+        <p class="upload-form__drop-zone-text">
+          {{ selectedFile ? selectedFile.name : "Drag & drop a CSV here, or" }}
+        </p>
+        <label class="upload-form__drop-zone-button" for="fileUpload">
+          {{ selectedFile ? "Replace file" : "Browse for file" }}
+        </label>
+        <input
+          class="upload-form__file-input"
+          id="fileUpload"
+          type="file"
+          accept=".csv"
+          (change)="onFileSelected($event)"
+        />
+      </div>
     </div>
     @if (errorMessage) {
-      <p class="error">{{ errorMessage }}</p>
+      <p class="upload-form__error">{{ errorMessage }}</p>
     }
   </form>
 </section>

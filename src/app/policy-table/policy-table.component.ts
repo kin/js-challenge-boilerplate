@@ -51,11 +51,17 @@ export class PolicyTableComponent implements OnChanges {
       });
   }
 
-  // CheckSum operation to see if policy number is valid
-  // According to instructions, checksum assigns a place number (d) based on reverse order (so final
-  // number is d1, and it increases as you move back through the set). From there it is as follows:
-  // (d1+(2*d2)+(3*d3)+...+(9*d9)) mod 11 = 0
-
+  /**
+   * Checks if a given policy number is valid based on the checksum algorithm.
+   * The algorithm multiplies each digit of the policy number by its position (starting
+   * from 1 for the last digit), sums these products, and checks if the total is divisible by 11.
+   *
+   * NOTE: The instructions do not state whether we can safely assume all numbers will be
+   * 9 digits so this function is designed to handle any length of policy number.
+   *
+   * @param policy The policy number as a string to be validated.
+   * @returns A boolean indicating whether the policy number is valid (true) or not (false).
+   */
   private isValid(policy: string): boolean {
     // Reverse number so that it is simpler to assign place (d)
     const checksumArr = policy.split('').reverse();
