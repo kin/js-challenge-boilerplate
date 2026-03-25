@@ -14,7 +14,9 @@
         <tr>
           <td class="policy-table__count-cell">{{ index + 1 }}</td>
           <td>{{ policy.policyNumber }}</td>
-          <td>{{ policy.isValid ? "valid" : "error" }}</td>
+          <td>
+            {{ policy.isValid ? "valid" : "error" }}
+          </td>
         </tr>
       }
     </tbody>
@@ -23,9 +25,11 @@
   <button
     class="policy-table__submit-button"
     (click)="submitPolicies()"
-    [disabled]="submissionStatus === 'loading'"
+    [disabled]="
+      submissionStatus === 'loading' || submissionStatus === 'success'
+    "
   >
-    {{ submissionStatus === "loading" ? "Submitting..." : "Submit Policies" }}
+    Submit Policy Numbers
   </button>
 
   @if (submissionStatus === "success") {

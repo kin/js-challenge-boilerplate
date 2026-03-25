@@ -12,10 +12,18 @@
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
+.table-empty-state__title {
+  display: block;
+  font-size: 18px;
+  margin: 18px 0 0;
+  font-weight: bold;
+}
+
 .table-empty-state__description {
-  color: var(--color-neutral-600);
+  color: var(--color-neutral-800);
   font-size: 12px;
   padding: 0 24px;
+  margin: 18px 0 0;
   text-align: center;
 }
 

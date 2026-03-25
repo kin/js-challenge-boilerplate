@@ -5,14 +5,18 @@ import { PageLayoutComponent } from './page-layout/page-layout.component';
 import { KinLogoComponent } from './kin-logo/kin-logo.component';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.scss',
-    standalone: true,
-    imports: [UploadFormComponent, PolicyTableComponent, PageLayoutComponent, KinLogoComponent]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+  standalone: true,
+  imports: [
+    UploadFormComponent,
+    PolicyTableComponent,
+    PageLayoutComponent,
+    KinLogoComponent,
+  ],
 })
 export class AppComponent {
-  title = 'kin-ocr';
   policies: string[] = [];
 
   onCsvParsed(rows: string[]): void {

@@ -24,7 +24,7 @@ export class PolicyTableComponent implements OnChanges {
 
   constructor(private http: HttpClient) {}
 
-  /* Reset state when Input changes */
+  // Reset state when Input changes
   ngOnChanges(): void {
     this.processedPolicies = this.policies.map((p) => ({
       policyNumber: parseInt(p, 10),
@@ -51,7 +51,13 @@ export class PolicyTableComponent implements OnChanges {
       });
   }
 
+  // CheckSum operation to see if policy number is valid
+  // According to instructions, checksum assigns a place number (d) based on reverse order (so final
+  // number is d1, and it increases as you move back through the set). From there it is as follows:
+  // (d1+(2*d2)+(3*d3)+...+(9*d9)) mod 11 = 0
+
   private isValid(policy: string): boolean {
+    // Reverse number so that it is simpler to assign place (d)
     const checksumArr = policy.split('').reverse();
     const productArr = [];
 

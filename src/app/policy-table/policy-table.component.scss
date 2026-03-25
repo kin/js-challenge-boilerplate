@@ -15,17 +15,19 @@
 
   th,
   td {
-    padding: 8px; /* Adds 8px of space inside cells */
+    padding: 8px;
   }
-}
 
-tr + tr {
-  border-top: 1px solid var(--color-neutral-400);
+  tr + tr {
+    border-top: 1px solid var(--color-neutral-400);
+  }
 }
 
 .policy-table__count-cell {
   width: 50px;
   text-align: center;
+  color: var(--color-neutral-700);
+  font-size: 14px;
 }
 
 .policy-table__submit-button {
@@ -36,4 +38,12 @@ tr + tr {
   padding: 12px;
   border-radius: 4px;
   margin-top: 32px;
+  cursor: pointer;
+  &:disabled {
+    cursor: not-allowed;
+    background: var(--color-primary-200);
+  }
+  &:hover {
+    background: var(--color-primary-200);
+  }
 }

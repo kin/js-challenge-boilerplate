@@ -6,7 +6,7 @@ const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB (1 MB = 1024 * 1024 bytes)
   selector: 'app-upload-form',
   templateUrl: './upload-form.component.html',
   styleUrl: './upload-form.component.scss',
-  standalone: true
+  standalone: true,
 })
 export class UploadFormComponent {
   selectedFile: File | null = null;
@@ -29,16 +29,22 @@ export class UploadFormComponent {
     }
   }
 
+  // Parse the CSV into an array we can use for display
   private parseCSV(file: File): void {
     const reader = new FileReader();
     reader.onload = (e) => {
       const text = e.target?.result as string;
-      const rows = text.split(',').map(r => r.trim()).filter(r => r.length > 0);
+      const rows = text
+        .split(',')
+        .map((r) => r.trim())
+        .filter((r) => r.length > 0);
       this.csvParsed.emit(rows);
     };
     reader.readAsText(file);
   }
 
+  // For the purpose of this challenge, we will just log the file name on submit.
+  // In a real app, this would likely trigger an upload to a server or some other processing.
   onSubmit(): void {
     if (this.selectedFile) {
       console.log('Uploading file:', this.selectedFile.name);
