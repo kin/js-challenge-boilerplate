@@ -13,3 +13,12 @@ All of our applications are using the modern versions of Angular, so feel free t
 Feel free to remove routing or upgrade any of the dependencies if you need to.
 
 Please use the `./sample.csv` file as input into your application.
+
+## Running this boilerplate
+
+The app will default to running on localhost:4200.
+
+To run the app, enter the command ```npm start``` in the terminal. 
+
+To run tests, enter the command ```npm test```.
+
