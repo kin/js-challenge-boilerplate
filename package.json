@@ -9,6 +9,10 @@
     "test": "ng test --browsers=ChromeHeadlessCI --no-watch"
   },
   "private": true,
+  "engines": {
+    "node": ">=18.17.0",
+    "npm": ">=9.6.7"
+  },
   "dependencies": {
     "@angular/animations": "^21.2.9",
     "@angular/common": "^21.2.9",
@@ -20,7 +24,7 @@
     "@angular/router": "^21.2.9",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "^0.15.1"
+    "zone.js": "^0.16.0"
   },
   "devDependencies": {
     "@angular/build": "^21.2.7",
@@ -32,7 +36,7 @@
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
+    "karma-jasmine-html-reporter": "~2.2.0",
     "typescript": "5.9.3"
   }
 }
