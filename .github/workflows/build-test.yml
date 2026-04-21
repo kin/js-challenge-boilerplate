@@ -30,5 +30,7 @@ jobs:
           node-version-file: '.nvmrc'
       - name: NPM Install
         run: npm ci --ignore-scripts
+      - name: Build
+        run: npm run build
       - name: Test
         run: npm test
